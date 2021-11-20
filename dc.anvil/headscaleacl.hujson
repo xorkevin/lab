@@ -1,0 +1,48 @@
+{
+  "Groups": {
+    "group:admin": [
+{{- range .Vars.server.headscale.users }}
+{{- if .admin }}
+      {{ .ns }}
+{{- end }}
+{{- end }}
+    ],
+    "group:users": [
+{{- range .Vars.server.headscale.users }}
+      {{ .ns }}
+{{- end }}
+    ],
+  },
+  "TagOwners": {
+    "tag:lab": ["group:admin"],
+    "tag:infra": ["group:admin"],
+    "tag:vault": ["group:admin"],
+  },
+  "ACLs": [
+    {
+      "Action": "accept",
+      "Users": ["tag:infra"],
+      "Ports": ["tag:infra:*"],
+    },
+    {
+      "Action": "accept",
+      "Users": ["tag:lab"],
+      "Ports": ["tag:lab:*", "tag:infra:*"],
+    },
+    {
+      "Action": "accept",
+      "Users": ["tag:vault"],
+      "Ports": ["tag:vault:*", "tag:infra:*"],
+    },
+    {
+      "Action": "accept",
+      "Users": ["group:admin"],
+      "Ports": ["tag:lab:*", "tag:infra:*", "tag:vault:*"],
+    },
+    {
+      "Action": "accept",
+      "Users": ["group:users"],
+      "Ports": ["tag:lab:*"],
+    },
+  ],
+}

@@ -1,0 +1,43 @@
+server_url: {{ .Vars.server.headscale.url }}
+listen_addr: 0.0.0.0:8080
+ip_prefix: 100.64.0.0/10
+private_key_path: private.key
+ephemeral_node_inactivity_timeout: 30m
+log_level: info
+disable_check_updates: true
+unix_socket: /var/run/headscale.sock
+
+derp:
+  paths:
+    - derp.yaml
+  auto_update_enabled: true
+  update_frequency: 1m
+
+db_type: postgres
+db_host: postgres
+db_port: 5432
+db_name: postgres
+db_user: postgres
+
+acl_policy_path: aclpolicy.hujson
+
+dns_config:
+{{- with .Vars.server.headscale.dns }}
+  nameservers:
+{{- range . }}
+    - {{ . }}
+{{- end }}
+{{- else }}
+  nameservers: []
+{{- end }}
+  magic_dns: true
+  base_domain: {{ .Vars.server.headscale.domain }}
+
+oidc:
+  issuer: {{ .Vars.server.headscale.oidc.issuer }}
+  client_id: {{ .Vars.server.headscale.oidc.client_id }}
+  client_secret: {{ .Vars.server.headscale.oidc.client_secret }}
+  domain_map:
+{{- range .Vars.server.headscale.users }}
+    {{ .email }}: {{ .ns }}
+{{- end }}

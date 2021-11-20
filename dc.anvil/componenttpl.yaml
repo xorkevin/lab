@@ -1,0 +1,20 @@
+{{ $outdir := .Vars.outputdir -}}
+templates:
+  dockercompose:
+    path: docker-compose.yaml
+    output: {{ $outdir }}/docker-compose.yaml
+  composeenv:
+    path: lab.env
+    output: {{ $outdir }}/lab.env
+  headscaleconfig:
+    path: headscale.yaml
+    output: {{ $outdir }}/headscaleconfig/config.yaml
+  headscalekey:
+    path: headscale.key
+    output: {{ $outdir }}/headscaleconfig/private.key
+  headscalederp:
+    path: headscalederp.yaml
+    output: {{ $outdir }}/headscaleconfig/derp.yaml
+  headscaleacl:
+    path: headscaleacl.hujson
+    output: {{ $outdir }}/headscaleconfig/aclpolicy.hujson

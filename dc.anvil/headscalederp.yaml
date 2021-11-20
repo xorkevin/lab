@@ -1,0 +1,9 @@
+regions:
+  900:
+    regionid: 900
+    regioncode: internal
+    regionname: Internal Region
+    nodes:
+      - name: 900a
+        regionid: 900
+        hostname: {{ .Vars.server.headscale.derpdomain }}

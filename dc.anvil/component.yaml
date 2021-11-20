@@ -1,0 +1,31 @@
+version: xorkevin.dev/anvil/v1alpha1
+
+vars:
+  outputdir: lab
+  images:
+    headscale:
+      name: headscale/headscale
+      version: '0.12'
+    postgres:
+      name: postgres
+      version: 14-alpine
+  server:
+    headscale:
+      url: http://localhost:8082
+      domain: xorkevin.lan
+      derpdomain: localhost:8084
+      dns:
+        - 8.8.8.8
+        - 8.8.4.4
+        - 1.1.1.1
+        - 1.0.0.1
+      oidc:
+        issuer: http://governor.dev.localhost:8080
+        client_id: client_id
+        client_secret: secret
+      users:
+        - email: kevin@xorkevin.com
+          ns: kevin
+          admin: true
+
+configtpl: componenttpl.yaml
