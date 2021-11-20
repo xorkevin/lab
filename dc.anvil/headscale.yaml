@@ -35,8 +35,6 @@ dns_config:
 
 oidc:
   issuer: {{ .Vars.server.headscale.oidc.issuer }}
-  client_id: {{ .Vars.server.headscale.oidc.client_id }}
-  client_secret: {{ .Vars.server.headscale.oidc.client_secret }}
   domain_map:
 {{- range .Vars.server.headscale.users }}
     {{ .email }}: {{ .ns }}

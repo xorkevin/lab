@@ -23,6 +23,9 @@ DC_PROJECT=lab
 dc-init: ## Init secrets
 	./init.sh
 
+dc-config: ## Set manual secrets
+	./config.sh
+
 dc-devgen: ## Generate docker compose resources
 	if [ -d $(DC_ANVIL_OUT) ]; then rm -r $(DC_ANVIL_OUT); fi
 	anvil component -i $(DC_ANVIL_SRC) -o $(DC_ANVIL_OUT) -c $(DC_ANVIL_MAIN)

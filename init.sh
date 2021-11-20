@@ -23,18 +23,18 @@ else
   log2 "Headscale wireguard key already present at $headscalekey"
 fi
 
-labenv=dc.anvil/lab.env
-if [ ! -e "$labenv" ]; then
-  log2 "No lab env at $labenv"
+pgpassenv=dc.anvil/labpgpass.env
+if [ ! -e "$pgpassenv" ]; then
+  log2 "No postgres pass env at $pgpassenv"
   pgpass=$(gen_pass 64)
 
   mask=$(umask)
   umask 077
-  cat <<EOF > "$labenv"
+  cat <<EOF > "$pgpassenv"
 POSTGRES_PASSWORD="$pgpass"
 EOF
   umask "$mask"
-  log2 "Wrote postgres pass to $labenv"
+  log2 "Wrote postgres pass to $pgpassenv"
 else
-  log2 "Lab env already present at $labenv"
+  log2 "Postgres pass env already present at $pgpassenv"
 fi

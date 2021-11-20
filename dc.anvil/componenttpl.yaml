@@ -3,9 +3,12 @@ templates:
   dockercompose:
     path: docker-compose.yaml
     output: {{ $outdir }}/docker-compose.yaml
-  composeenv:
-    path: lab.env
-    output: {{ $outdir }}/lab.env
+  pgpassenv:
+    path: labpgpass.env
+    output: {{ $outdir }}/labpgpass.env
+  oidcclientenv:
+    path: laboidcclient.env
+    output: {{ $outdir }}/laboidcclient.env
   headscaleconfig:
     path: headscale.yaml
     output: {{ $outdir }}/headscaleconfig/config.yaml

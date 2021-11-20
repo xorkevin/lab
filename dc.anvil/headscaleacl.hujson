@@ -3,13 +3,13 @@
     "group:admin": [
 {{- range .Vars.server.headscale.users }}
 {{- if .admin }}
-      {{ .ns }}
+      "{{ .ns }}",
 {{- end }}
 {{- end }}
     ],
     "group:users": [
 {{- range .Vars.server.headscale.users }}
-      {{ .ns }}
+      "{{ .ns }}",
 {{- end }}
     ],
   },

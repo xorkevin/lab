@@ -21,8 +21,6 @@ vars:
         - 1.0.0.1
       oidc:
         issuer: http://governor.dev.localhost:8080
-        client_id: client_id
-        client_secret: secret
       users:
         - email: kevin@xorkevin.com
           ns: kevin
