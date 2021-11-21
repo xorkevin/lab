@@ -28,7 +28,14 @@ services:
       - 8082:8080
     volumes:
       - ./headscaleconfig:/etc/headscale:ro
-      - ./headscalerun:/var/run
+      - ../dc.run/headscale:/var/run
+  derper:
+    image: {{ .Vars.images.derper.name }}:{{ .Vars.images.derper.version }}
+    ports:
+      - 8084:8080
+      - 3478:3478/udp
+    volumes:
+      - ../dc.run/derper:/var/lib/derper
 
 volumes:
   pgdata: {}

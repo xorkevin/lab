@@ -38,3 +38,8 @@ EOF
 else
   log2 "Postgres pass env already present at $pgpassenv"
 fi
+
+log2 "Mkdir dc.run/headscale"
+mkdir -p dc.run/headscale
+log2 "Mkdir dc.run/derper"
+mkdir -p dc.run/derper
