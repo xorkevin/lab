@@ -1,7 +1,3 @@
-env_file:
-  - ./labpgpass.env
-  - ./laboidcclient.env
-
 services:
   postgres:
     image: {{ .Vars.images.postgres.name }}:{{ .Vars.images.postgres.version }}
