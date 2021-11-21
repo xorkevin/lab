@@ -39,3 +39,8 @@ dc-devup: ## Deploy docker-compose resources
 
 dc-devdown: ## Destroy docker-compose resources
 	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/lab/docker-compose.yaml down
+
+.PHONY: login
+
+ts-login: ## Login to tailscale
+	sudo ./dc.anvil_out/lab/login.sh

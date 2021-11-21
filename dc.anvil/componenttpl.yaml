@@ -27,3 +27,6 @@ templates:
   nssetup:
     path: setup.sh
     output: {{ $outdir }}/headscalesetup/setup.sh
+  login:
+    path: login.sh
+    output: {{ $outdir }}/login.sh
