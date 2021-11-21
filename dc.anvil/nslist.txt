@@ -1,3 +1,0 @@
-{{- range .Vars.server.headscale.users -}}
-{{ .ns }}
-{{- end }}

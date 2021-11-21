@@ -21,12 +21,6 @@ templates:
   headscaleacl:
     path: headscaleacl.hujson
     output: {{ $outdir }}/headscaleconfig/aclpolicy.hujson
-  nslist:
-    path: nslist.txt
-    output: {{ $outdir }}/headscaleconfig/nslist.txt
-  nssetup:
-    path: setup.sh
-    output: {{ $outdir }}/headscalesetup/setup.sh
   login:
     path: login.sh
     output: {{ $outdir }}/login.sh

@@ -14,9 +14,12 @@ vars:
       version: 14-alpine
   server:
     headscale:
+      loglevel: debug
       url: http://localhost:8082
       domain: xorkevin.lan
-      derpdomain: localhost:8084
+      derp:
+        domain: localhost
+        port: 8084
       dns:
         - 8.8.8.8
         - 8.8.4.4

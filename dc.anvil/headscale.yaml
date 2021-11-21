@@ -3,7 +3,7 @@ listen_addr: 0.0.0.0:8080
 ip_prefix: 100.64.0.0/10
 private_key_path: /etc/headscale/private.key
 ephemeral_node_inactivity_timeout: 30m
-log_level: info
+log_level: {{ .Vars.server.headscale.loglevel }}
 disable_check_updates: true
 unix_socket: /var/run/headscale.sock
 
@@ -13,7 +13,7 @@ derp:
   auto_update_enabled: true
   update_frequency: 1m
 
-db_type: postgres
+db_type: postgresql
 db_host: postgres
 db_port: 5432
 db_name: postgres
