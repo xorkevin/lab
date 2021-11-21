@@ -13,9 +13,22 @@ services:
       - 5434:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
+  headscalesetup:
+    image: {{ .Vars.images.headscale.name }}:{{ .Vars.images.headscale.version }}
+    entrypoint: ['sh']
+    command: ['/home/headscale/setup/setup.sh']
+    environment:
+      DB_PASS: "${POSTGRES_PASSWORD}"
+      OIDC_CLIENT_ID: "${OIDC_CLIENT_ID}"
+      OIDC_CLIENT_SECRET: "${OIDC_CLIENT_SECRET}"
+    volumes:
+      - ./headscaleconfig:/etc/headscale:ro
+      - ./headscalesetup:/home/headscale/setup:ro
+    depends_on:
+      - postgres
   headscale:
     image: {{ .Vars.images.headscale.name }}:{{ .Vars.images.headscale.version }}
-    entrypoint: headscale
+    entrypoint: ['headscale']
     command: ['serve']
     environment:
       DB_PASS: "${POSTGRES_PASSWORD}"
@@ -28,6 +41,7 @@ services:
       - ../../dc.run/headscale:/var/run
     depends_on:
       - postgres
+      - headscalesetup
       - derper
   derper:
     image: {{ .Vars.images.derper.name }}:{{ .Vars.images.derper.version }}
