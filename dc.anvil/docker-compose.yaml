@@ -16,6 +16,7 @@ services:
   headscale:
     image: {{ .Vars.images.headscale.name }}:{{ .Vars.images.headscale.version }}
     entrypoint: headscale
+    command: ['serve']
     environment:
       DB_PASS: "${POSTGRES_PASSWORD}"
       OIDC_CLIENT_ID: "${OIDC_CLIENT_ID}"
@@ -24,14 +25,17 @@ services:
       - 8082:8080
     volumes:
       - ./headscaleconfig:/etc/headscale:ro
-      - ../dc.run/headscale:/var/run
+      - ../../dc.run/headscale:/var/run
+    depends_on:
+      - postgres
+      - derper
   derper:
     image: {{ .Vars.images.derper.name }}:{{ .Vars.images.derper.version }}
     ports:
       - 8084:8080
       - 3478:3478/udp
     volumes:
-      - ../dc.run/derper:/var/lib/derper
+      - ../../dc.run/derper:/var/lib/derper
 
 volumes:
   pgdata: {}

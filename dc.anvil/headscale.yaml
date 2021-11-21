@@ -1,7 +1,7 @@
 server_url: {{ .Vars.server.headscale.url }}
 listen_addr: 0.0.0.0:8080
 ip_prefix: 100.64.0.0/10
-private_key_path: private.key
+private_key_path: /etc/headscale/private.key
 ephemeral_node_inactivity_timeout: 30m
 log_level: info
 disable_check_updates: true
@@ -9,7 +9,7 @@ unix_socket: /var/run/headscale.sock
 
 derp:
   paths:
-    - derp.yaml
+    - /etc/headscale/derp.yaml
   auto_update_enabled: true
   update_frequency: 1m
 
@@ -19,7 +19,7 @@ db_port: 5432
 db_name: postgres
 db_user: postgres
 
-acl_policy_path: aclpolicy.hujson
+acl_policy_path: /etc/headscale/aclpolicy.hujson
 
 dns_config:
 {{- with .Vars.server.headscale.dns }}
