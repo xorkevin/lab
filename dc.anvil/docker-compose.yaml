@@ -33,7 +33,6 @@ services:
       - derper
   derper:
     image: {{ .Vars.images.derper.name }}:{{ .Vars.images.derper.version }}
-{{- if .Vars.server.headscale.derp.tls }}
     entrypoint: ['/home/derper/derper']
     command:
       - '-c'
@@ -41,6 +40,8 @@ services:
       - '-a'
       - ':8080'
       - '--stun'
+      - '--verify-clients'
+{{- if .Vars.server.headscale.derp.tls }}
       - '--certmode'
       - 'manual'
       - '--certdir'
@@ -53,8 +54,9 @@ services:
       - 3478:3478/udp
     volumes:
       - ../../dc.run/derper:/var/lib/derper
+      - /var/run/tailscale:/var/run/tailscale
 {{- if .Vars.server.headscale.derp.tls }}
-      - ./derpcert:/etc/derper/certs
+      - ./derpcert:/etc/derper/certs:ro
 {{- end }}
 
 volumes:
