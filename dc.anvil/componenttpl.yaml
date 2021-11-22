@@ -24,3 +24,12 @@ templates:
   login:
     path: login.sh
     output: {{ $outdir }}/login.sh
+{{- if .Vars.server.headscale.derp.tls }}
+{{- $hostname := .Vars.server.headscale.derp.domain }}
+  derpertlskey:
+    path: derpcert/{{ $hostname }}.key
+    output: {{ $outdir }}/derpcert/{{ $hostname }}.key
+  derpertlscrt:
+    path: derpcert/{{ $hostname }}.crt
+    output: {{ $outdir }}/derpcert/{{ $hostname }}.crt
+{{- end }}

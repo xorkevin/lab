@@ -1,4 +1,5 @@
 dc.anvil/headscale.key
 dc.anvil/*.env
+dc.anvil/derpcert/
 dc.anvil_out/
 dc.run/

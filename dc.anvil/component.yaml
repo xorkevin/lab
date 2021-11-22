@@ -20,6 +20,7 @@ vars:
       derp:
         domain: localhost
         port: 8084
+        tls: true
       dns:
         - 8.8.8.8
         - 8.8.4.4

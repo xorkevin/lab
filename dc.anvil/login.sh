@@ -1,3 +1,3 @@
 #!/bin/sh
 
-tailscale up --login-server {{ .Vars.server.headscale.url }}
+tailscale up --login-server {{ .Vars.server.headscale.url }} --qr
