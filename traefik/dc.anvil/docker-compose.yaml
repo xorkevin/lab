@@ -1,0 +1,31 @@
+services:
+  traefik:
+    image: {{ .Vars.images.traefik.name }}:{{ .Vars.images.traefik.version }}
+    entrypoint: ['traefik']
+    command:
+      - '--entrypoints.web.address=:8080'
+      - '--entrypoints.websecure.address=:8443'
+      - '--certificatesresolvers.certresolver.acme.httpchallenge=true'
+      - '--certificatesresolvers.certresolver.acme.httpchallenge.entrypoint=web'
+      - '--certificatesresolvers.certresolver.acme.caserver={{ .Vars.service.traefik.certresolver.caserver }}'
+      - '--certificatesresolvers.certresolver.acme.email={{ .Vars.service.traefik.certresolver.email }}'
+      - '--certificatesresolvers.certresolver.acme.storage=/var/lib/traefik/letsencrypt/acme.json'
+      - '--providers.docker'
+      - '--providers.docker.exposedbydefault=false'
+      - '--providers.docker.httpclienttimeout=5'
+      - '--providers.docker.network=web'
+      - '--global.checknewversion=false'
+      - '--global.sendanonymoususage=false'
+    ports:
+      - {{ .Vars.service.traefik.port }}:8080
+      - {{ .Vars.service.traefik.tlsport }}:8443
+    volumes:
+      - ../../dc.run/traefik:/var/lib/traefik
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - default
+      - web
+
+networks:
+  web:
+    external: true

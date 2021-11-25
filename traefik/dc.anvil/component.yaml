@@ -1,0 +1,17 @@
+version: xorkevin.dev/anvil/v1alpha1
+
+vars:
+  outputdir: traefik
+  images:
+    traefik:
+      name: traefik
+      version: '2.5'
+  service:
+    traefik:
+      port: '8080'
+      tlsport: '8443'
+      certresolver:
+        caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+        email: kevin@xorkevin.com
+
+configtpl: componenttpl.yaml

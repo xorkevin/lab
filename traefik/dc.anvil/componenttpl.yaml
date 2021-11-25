@@ -1,0 +1,5 @@
+{{ $outdir := .Vars.outputdir -}}
+templates:
+  dockercompose:
+    path: docker-compose.yaml
+    output: {{ $outdir }}/docker-compose.yaml
