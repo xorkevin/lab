@@ -3,7 +3,7 @@
 .PHONY: help all
 
 CMDNAME=lab
-CMDDESC=experiments
+CMDDESC=tailscale
 
 help: ## Print this help
 	@./help.sh '$(CMDNAME)' '$(CMDDESC)'
@@ -11,7 +11,7 @@ help: ## Print this help
 all: dc-devgen ## Default
 
 
-## DOCKER COMPOSE DEV ENV
+## DOCKER COMPOSE ENV
 
 DC_ANVIL_SRC=dc.anvil
 DC_ANVIL_MAIN=$(DC_ANVIL_SRC)/component.yaml
@@ -40,7 +40,7 @@ dc-devup: ## Deploy docker-compose resources
 dc-devdown: ## Destroy docker-compose resources
 	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/lab/docker-compose.yaml down
 
-.PHONY: ts-login
+.PHONY: login
 
-ts-login: ## Login to tailscale
+login: ## Login to tailscale
 	sudo ./dc.anvil_out/lab/login.sh
