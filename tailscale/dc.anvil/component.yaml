@@ -1,7 +1,7 @@
 version: xorkevin.dev/anvil/v1alpha1
 
 vars:
-  outputdir: lab
+  outputdir: tailscale
   images:
     headscale:
       name: headscale/headscale

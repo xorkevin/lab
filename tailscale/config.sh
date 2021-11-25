@@ -6,7 +6,7 @@ log2() {
   printf '[%s] %s\n' "$(date)" "$*" 1>&2
 }
 
-oidcenv=dc.anvil/laboidcclient.env
+oidcenv=dc.anvil/oidcclient.env
 if [ ! -e "$oidcenv" ]; then
   log2 "No OIDC config at $oidcenv"
   printf "Set OIDC client\n"

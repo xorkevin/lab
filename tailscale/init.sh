@@ -23,7 +23,7 @@ else
   log2 "Headscale wireguard key already present at $headscalekey"
 fi
 
-pgpassenv=dc.anvil/labpgpass.env
+pgpassenv=dc.anvil/pgpass.env
 if [ ! -e "$pgpassenv" ]; then
   log2 "No postgres pass env at $pgpassenv"
   pgpass=$(gen_pass 64)
