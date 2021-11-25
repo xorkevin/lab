@@ -1,0 +1,13 @@
+version: xorkevin.dev/anvil/v1alpha1
+
+vars:
+  outputdir: whoami
+  images:
+    whoami:
+      name: xorkevin/whoami
+      version: '1'
+  service:
+    whoami:
+      host: whoami.dev.localhost
+
+configtpl: componenttpl.yaml
