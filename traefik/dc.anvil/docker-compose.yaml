@@ -12,8 +12,7 @@ services:
       - '--certificatesresolvers.certresolver.acme.storage=/var/lib/traefik/letsencrypt/acme.json'
       - '--providers.docker'
       - '--providers.docker.exposedbydefault=false'
-      - '--providers.docker.httpclienttimeout=5'
-      - '--providers.docker.network=web'
+      - '--providers.docker.network=traefik_web'
       - '--global.checknewversion=false'
       - '--global.sendanonymoususage=false'
     ports:
@@ -27,5 +26,4 @@ services:
       - web
 
 networks:
-  web:
-    external: true
+  web: {}
