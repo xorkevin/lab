@@ -6,9 +6,11 @@ log2() {
   printf '[%s] %s\n' "$(date)" "$*" 1>&2
 }
 
-oidcenv=dc.anvil/oidcclient.env
+envdir=dc.run/env
+oidcenv="$envdir/oidcclient.env"
 if [ ! -e "$oidcenv" ]; then
   log2 "No OIDC config at $oidcenv"
+  mkdir -p "$envdir"
   printf "Set OIDC client\n"
   read -ep 'client id: ' clientid
   read -sp 'client secret: ' clientsecret; printf '\n'

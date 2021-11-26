@@ -11,9 +11,11 @@ gen_pass() {
   head -c "$passlen" < /dev/urandom | base64 | tr -d '\n=' | tr '+/' '-_'
 }
 
-headscalekey=dc.anvil/headscale.key
+headscalekeydir=dc.run/headscale/key
+headscalekey="$headscalekeydir/private.key"
 if [ ! -e "$headscalekey" ]; then
   log2 "No headscale wireguard key at $headscalekey"
+  mkdir -p "$headscalekeydir"
   mask=$(umask)
   umask 077
   wg genkey > "$headscalekey"
@@ -23,11 +25,12 @@ else
   log2 "Headscale wireguard key already present at $headscalekey"
 fi
 
-pgpassenv=dc.anvil/pgpass.env
+envdir=dc.run/env
+pgpassenv="$envdir/pgpass.env"
 if [ ! -e "$pgpassenv" ]; then
   log2 "No postgres pass env at $pgpassenv"
   pgpass=$(gen_pass 64)
-
+  mkdir -p "$envdir"
   mask=$(umask)
   umask 077
   cat <<EOF > "$pgpassenv"
@@ -39,8 +42,8 @@ else
   log2 "Postgres pass env already present at $pgpassenv"
 fi
 
-testcertdir=dc.anvil/derpcert
-if [ ! -d "$testcertdir" ]; then
+testcertdir=dc.run/derper/cert
+if [ ! -e "$testcertdir/localhost.key" ]; then
   log2 "No test DERP TLS cert at $testcertdir"
   mkdir -p "$testcertdir"
   openssl req -x509 \
@@ -52,7 +55,9 @@ else
   log2 "Test DERP TLS cert already present at $testcertdir"
 fi
 
-log2 "Mkdir dc.run/headscale"
-mkdir -p dc.run/headscale
-log2 "Mkdir dc.run/derper"
-mkdir -p dc.run/derper
+headscalerundir=dc.run/headscale/run
+log2 "Mkdir $headscalerundir"
+mkdir -p "$headscalerundir"
+derperdatadir=dc.run/derper/data
+log2 "Mkdir $derperdatadir"
+mkdir -p "$derperdatadir"

@@ -3,18 +3,9 @@ templates:
   dockercompose:
     path: docker-compose.yaml
     output: {{ $outdir }}/docker-compose.yaml
-  pgpassenv:
-    path: pgpass.env
-    output: {{ $outdir }}/pgpass.env
-  oidcclientenv:
-    path: oidcclient.env
-    output: {{ $outdir }}/oidcclient.env
   headscaleconfig:
     path: headscale.yaml
     output: {{ $outdir }}/headscaleconfig/config.yaml
-  headscalekey:
-    path: headscale.key
-    output: {{ $outdir }}/headscaleconfig/private.key
   headscalederp:
     path: headscalederp.yaml
     output: {{ $outdir }}/headscaleconfig/derp.yaml
@@ -24,12 +15,3 @@ templates:
   login:
     path: login.sh
     output: {{ $outdir }}/login.sh
-{{- if .Vars.server.headscale.derp.tls }}
-{{- $hostname := .Vars.server.headscale.derp.domain }}
-  derpertlskey:
-    path: derpcert/{{ $hostname }}.key
-    output: {{ $outdir }}/derpcert/{{ $hostname }}.key
-  derpertlscrt:
-    path: derpcert/{{ $hostname }}.crt
-    output: {{ $outdir }}/derpcert/{{ $hostname }}.crt
-{{- end }}

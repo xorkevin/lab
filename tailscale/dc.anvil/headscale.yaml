@@ -1,7 +1,7 @@
 server_url: {{ .Vars.server.headscale.url }}
 listen_addr: 0.0.0.0:8080
 ip_prefix: 100.64.0.0/10
-private_key_path: /etc/headscale/private.key
+private_key_path: /etc/headscalekey/private.key
 ephemeral_node_inactivity_timeout: 30m
 log_level: {{ .Vars.server.headscale.loglevel }}
 disable_check_updates: true

@@ -4,5 +4,5 @@ set -e
 
 mask=$(umask)
 umask 077
-cat dc.anvil_out/tailscale/*.env > dc.anvil_out/tailscale/.env
+cat dc.run/env/*.env > dc.anvil_out/tailscale/.env
 umask "$mask"

@@ -23,14 +23,15 @@ services:
       HEADSCALE_OIDC_CLIENT_SECRET: "${OIDC_CLIENT_SECRET}"
     ports:
       - 8082:8080
-    extra_hosts:
-      - "governor.dev.localhost:host-gateway"
     volumes:
       - ./headscaleconfig:/etc/headscale:ro
-      - ../../dc.run/headscale:/var/run
+      - ../../dc.run/headscale/key:/etc/headscalekey:ro
+      - ../../dc.run/headscale/run:/var/run
     depends_on:
       - postgres
       - derper
+    extra_hosts:
+      - governor.dev.localhost:host-gateway
   derper:
     image: {{ .Vars.images.derper.name }}:{{ .Vars.images.derper.version }}
     entrypoint: ['/home/derper/derper']
@@ -53,10 +54,10 @@ services:
       - 8084:8080
       - 3478:3478/udp
     volumes:
-      - ../../dc.run/derper:/var/lib/derper
+      - ../../dc.run/derper/data:/var/lib/derper/data
       - /var/run/tailscale:/var/run/tailscale:ro
 {{- if .Vars.server.headscale.derp.tls }}
-      - ./derpcert:/etc/derper/certs:ro
+      - ../../dc.run/derper/cert:/etc/derper/certs:ro
 {{- end }}
 
 volumes:
