@@ -1,0 +1,121 @@
+mode: INFO
+logoutput: STDOUT
+port: 8080
+baseurl: /api
+maxreqsize: 2M
+maxheadersize: 1M
+maxconnread: 5s
+maxconnheader: 2s
+maxconnwrite: 5s
+maxconnidle: 5s
+alloworigins: []
+allowpaths:
+  - '^/api/oauth/(token|userinfo|jwks)$'
+routerewrite:
+  - host: {{ .Vars.service.gov.courierhost }}
+    methods: ['GET']
+    pattern: '^/([A-Za-z0-9_-]{2,}(?:/image)?)$'
+    replace: /api/courier/link/id/$1
+  - host: {{ .Vars.service.gov.host }}
+    methods: ['GET']
+    pattern: '^\/\.well-known\/openid-configuration$'
+    replace: /api/oauth/openid-configuration
+vault:
+  filesource: /etc/governor/secrets.yaml
+setupsecret: setupsecret
+database:
+  auth: dbauth
+  dbname: postgres
+  host: postgres
+  port: 5432
+  sslmode: disable
+  hbinterval: 5
+  hbmaxfail: 5
+kvstore:
+  auth: kvauth
+  dbname: 0
+  host: redis
+  port: 6379
+  hbinterval: 5
+  hbmaxfail: 5
+objstore:
+  auth: objauth
+  host: minio
+  port: 9000
+  sslmode: false
+  location: us-east-1
+  hbinterval: 5
+  hbmaxfail: 5
+events:
+  auth: eventsauth
+  host: nats
+  port: 4222
+  hbinterval: 5
+  hbmaxfail: 3
+  minpullduration: 100ms
+template:
+  dir: anvil_out/governor/governor/templates
+mail:
+  auth: mailauth
+  host: mailhog
+  port: 1025
+  msgiddomain: xorkevin.com
+  fromaddress: no-reply@xorkevin.com
+  fromname: Governor
+  streamsize: 200M
+  eventsize: 2K
+  mailkey: mailkey
+role:
+  rolecache: 24h
+apikey:
+  scopecache: 24h
+token:
+  tokensecret: tokensecret
+  rsakey: rsakey
+  issuer: {{ .Vars.service.gov.tokenissuer }}
+  audience: governor
+gate:
+  realm: governor
+user:
+  streamsize: 200M
+  eventsize: 2K
+  accesstime: 5m
+  refreshtime: 4380h
+  refreshcache: 24h
+  confirmtime: 24h
+  passwordresettime: 24h
+  invitationtime: 24h
+  usercachetime: 24h
+  newloginemail: true
+  passwordminsize: 8
+  userapproval: true
+  otpkey: otpkey
+  otpissuer: Governor
+  rolesummary:
+    - user
+    - admin
+    - usr.gov.user
+    - mod.gov.user
+    - usr.gov.oauth
+    - mod.gov.oauth
+  email:
+    url:
+      base: {{ .Vars.service.gov.baseaddr }}
+      emailchange: /a/confirm/email?key={{`{{.Userid}}`}}.{{`{{.Key}}`}}
+      forgotpass: /x/resetpass?key={{`{{.Userid}}`}}.{{`{{.Key}}`}}
+      newuser: /x/confirm?userid={{`{{.Userid}}`}}&key={{`{{.Key}}`}}
+oauth:
+  codetime: 1m
+  accesstime: 5m
+  refreshtime: 168h
+  keycache: 24h
+  realm: governor
+  issuer: {{ .Vars.service.gov.tokenissuer }}
+  epauthorize: {{ .Vars.service.gov.baseaddr }}/oauth/auth
+  ephost: {{ .Vars.service.gov.baseaddr }}
+  epprofile: {{ .Vars.service.gov.baseaddr }}/u/{{`{{.Username}}`}}
+  eppicture: {{ .Vars.service.gov.baseaddr }}/api/profile/id/{{`{{.Userid}}`}}/image
+courier:
+  fallbacklink: {{ .Vars.service.gov.baseaddr }}
+  linkprefix: {{ .Vars.service.gov.courieraddr }}
+  cachetime: 24h

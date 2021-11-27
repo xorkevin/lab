@@ -1,0 +1,32 @@
+version: xorkevin.dev/anvil/v1alpha1
+
+vars:
+  outputdir: governor
+  images:
+    govlab:
+      name: xorkevin/govlab
+      version: latest
+    postgres:
+      name: postgres
+      version: 14-alpine
+    redis:
+      name: redis
+      version: 6-alpine
+    minio:
+      name: minio/minio
+      version: latest
+    nats:
+      name: nats
+      version: 2-alpine
+    mailhog:
+      name: mailhog/mailhog
+      version: latest
+  service:
+    gov:
+      host: governor.dev.localhost:8080
+      courierhost: go.governor.dev.localhost:8080
+      tokenissuer: http://governor.dev.localhost:8080
+      baseaddr: http://governor.dev.localhost:8080
+      courieraddr: http://go.governor.dev.localhost:8080
+
+configtpl: componenttpl.yaml

@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: {{ .Vars.images.postgres.name }}:{{ .Vars.images.postgres.version }}
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_INITDB_ARGS: '--encoding UTF8 --auth-local=trust --auth-host=scram-sha-256'
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+      LANG: C
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: {{ .Vars.images.redis.name }}:{{ .Vars.images.redis.version }}
+    entrypoint: ['redis-server']
+    command: ['--requirepass', "${REDIS_PASSWORD}"]
+
+  minio:
+    image: {{ .Vars.images.minio.name }}:{{ .Vars.images.minio.version }}
+    entrypoint: ['minio']
+    command: ['server', '/var/lib/minio/data']
+    environment:
+      MINIO_ACCESS_KEY: admin
+      MINIO_SECRET_KEY: "${MINIO_SECRET}"
+    volumes:
+      - miniodata:/var/lib/minio
+
+  nats:
+    image: {{ .Vars.images.nats.name }}:{{ .Vars.images.nats.version }}
+    entrypoint: ['nats-server']
+    command: ['-c', '/etc/nats/server.conf']
+    environment:
+      NATS_TOKEN: "${NATS_TOKEN}"
+    volumes:
+      - natsdata:/var/lib/nats
+      - ./natsetc:/etc/nats:ro
+
+  govlab:
+    image: {{ .Vars.images.govlab.name }}:{{ .Vars.images.govlab.version }}
+
+  mailhog:
+    image: {{ .Vars.images.mailhog.name }}:{{ .Vars.images.mailhog.version }}
+
+volumes:
+  pgdata: {}
+  miniodata: {}
+  natsdata: {}
