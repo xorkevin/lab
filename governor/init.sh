@@ -66,7 +66,7 @@ if [ ! -e "$natstokenenv" ]; then
   mask=$(umask)
   umask 077
   cat <<EOF > "$natstokenenv"
-MINIO_SECRET="$natstoken"
+NATS_TOKEN="$natstoken"
 EOF
   umask "$mask"
   log2 "Wrote nats token to $natstokenenv"

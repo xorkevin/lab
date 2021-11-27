@@ -18,10 +18,13 @@ DC_ANVIL_MAIN=$(DC_ANVIL_SRC)/component.yaml
 DC_ANVIL_OUT=dc.anvil_out
 DC_PROJECT=govlab
 
-.PHONY: init devgen dryrun devup devdown
+.PHONY: init config devgen dryrun devup devdown
 
 init: ## Init secrets
 	./init.sh
+
+config: ## Set manual secrets
+	./config.sh
 
 devgen: ## Generate docker-compose resources
 	if [ -d $(DC_ANVIL_OUT) ]; then rm -r $(DC_ANVIL_OUT); fi
@@ -29,10 +32,10 @@ devgen: ## Generate docker-compose resources
 	./genenv.sh
 
 dryrun: ## View docker-compose config
-	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/traefik/docker-compose.yaml config
+	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml config
 
 devup: ## Deploy docker-compose resources
-	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/traefik/docker-compose.yaml up -d
+	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml up -d
 
 devdown: ## Destroy docker-compose resources
-	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/traefik/docker-compose.yaml down
+	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml down
