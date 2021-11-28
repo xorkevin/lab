@@ -41,6 +41,9 @@ services:
 
   govlab:
     image: {{ .Vars.images.govlab.name }}:{{ .Vars.images.govlab.version }}
+    volumes:
+      - ./govconfig:/home/governor/config:ro
+      - ./govetc:/etc/governor:ro
 
   mailhog:
     image: {{ .Vars.images.mailhog.name }}:{{ .Vars.images.mailhog.version }}

@@ -8,4 +8,4 @@ templates:
     output: {{ $outdir }}/natsetc/server.conf
   config:
     path: config.yaml
-    output: {{ $outdir }}/config.yaml
+    output: {{ $outdir }}/govconfig/config.yaml
