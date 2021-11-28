@@ -44,6 +44,22 @@ services:
     volumes:
       - ./govconfig:/home/governor/config:ro
       - ./govetc:/etc/governor:ro
+      - ./templates:/home/governor/templates:ro
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik_web'
+      - 'traefik.http.services.govlab.loadbalancer.server.port=8080'
+      - 'traefik.http.routers.govlab.entrypoints=web'
+      - 'traefik.http.routers.govlab.rule=Host(`{{ .Vars.service.govlab.host }}`)'
+      - 'traefik.http.routers.govlab.service=govlab@docker'
+    networks:
+      - default
+      - traefik_web
+    depends_on:
+      - postgres
+      - redis
+      - minio
+      - nats
 
   mailhog:
     image: {{ .Vars.images.mailhog.name }}:{{ .Vars.images.mailhog.version }}
@@ -52,3 +68,7 @@ volumes:
   pgdata: {}
   miniodata: {}
   natsdata: {}
+
+networks:
+  traefik_web:
+    external: true

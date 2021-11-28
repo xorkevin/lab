@@ -9,3 +9,11 @@ templates:
   config:
     path: config.yaml
     output: {{ $outdir }}/govconfig/config.yaml
+{{- range .Vars.templates }}
+  {{ . }}:
+    path: templates/{{ . }}
+    output: {{ $outdir }}/templates/{{ . }}
+{{- end }}
+  client:
+    path: client.yaml
+    output: {{ $outdir }}/client.yaml

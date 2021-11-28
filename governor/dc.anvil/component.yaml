@@ -22,11 +22,40 @@ vars:
       name: mailhog/mailhog
       version: latest
   service:
+    govlab:
+      host: governor.dev.localhost
     gov:
       host: governor.dev.localhost:8080
       courierhost: go.governor.dev.localhost:8080
-      tokenissuer: http://governor.dev.localhost:8080
       baseaddr: http://governor.dev.localhost:8080
       courieraddr: http://go.governor.dev.localhost:8080
+  templates:
+    - emailchange.html
+    - emailchangenotify.html
+    - emailchangenotify_subject.txt
+    - emailchangenotify.txt
+    - emailchange_subject.txt
+    - emailchange.txt
+    - forgotpass.html
+    - forgotpass_subject.txt
+    - forgotpass.txt
+    - newlogin.html
+    - newlogin_subject.txt
+    - newlogin.txt
+    - newuser.html
+    - newuser_subject.txt
+    - newuser.txt
+    - otpbackupused.html
+    - otpbackupused_subject.txt
+    - otpbackupused.txt
+    - otpratelimit.html
+    - otpratelimit_subject.txt
+    - otpratelimit.txt
+    - passchange.html
+    - passchange_subject.txt
+    - passchange.txt
+    - passreset.html
+    - passreset_subject.txt
+    - passreset.txt
 
 configtpl: componenttpl.yaml

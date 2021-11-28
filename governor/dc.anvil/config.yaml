@@ -54,7 +54,7 @@ events:
   hbmaxfail: 3
   minpullduration: 100ms
 template:
-  dir: anvil_out/governor/governor/templates
+  dir: templates
 mail:
   auth: mailauth
   host: mailhog
@@ -72,7 +72,7 @@ apikey:
 token:
   tokensecret: tokensecret
   rsakey: rsakey
-  issuer: {{ .Vars.service.gov.tokenissuer }}
+  issuer: {{ .Vars.service.gov.baseaddr }}
   audience: governor
 gate:
   realm: governor
@@ -110,7 +110,7 @@ oauth:
   refreshtime: 168h
   keycache: 24h
   realm: governor
-  issuer: {{ .Vars.service.gov.tokenissuer }}
+  issuer: {{ .Vars.service.gov.baseaddr }}
   epauthorize: {{ .Vars.service.gov.baseaddr }}/oauth/auth
   ephost: {{ .Vars.service.gov.baseaddr }}
   epprofile: {{ .Vars.service.gov.baseaddr }}/u/{{`{{.Username}}`}}

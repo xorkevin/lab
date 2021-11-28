@@ -39,3 +39,52 @@ devup: ## Deploy docker-compose resources
 
 devdown: ## Destroy docker-compose resources
 	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml down
+
+## APP BUILD
+
+BIN_NAME=governor
+MAIN_PATH=main.go
+BIN_DIR=./bin
+BIN_PATH=$(BIN_DIR)/$(BIN_NAME)
+
+.PHONY: clean build
+
+clean: ## Remove build artifacts
+	if [ -d $(BIN_DIR) ]; then rm -r $(BIN_DIR); fi
+
+build: ## Build app
+	mkdir -p $(BIN_DIR)
+	CGO_ENABLED=0 go build -trimpath -ldflags "-w -s -X main.GitHash=$$(git rev-parse --verify HEAD)" -o $(BIN_PATH) $(MAIN_PATH)
+
+## DOCKER
+
+DOCKER_NAME=xorkevin/govlab
+
+DOCKER_MAJOR_VERSION=0.2
+DOCKER_VERSION=0.2.7-0
+
+DOCKER_LATEST_IMAGE=$(DOCKER_NAME):latest
+DOCKER_MAJOR_IMAGE=$(DOCKER_NAME):$(DOCKER_MAJOR_VERSION)
+DOCKER_IMAGE=$(DOCKER_NAME):$(DOCKER_VERSION)
+
+.PHONY: build-docker publish-docker docker
+
+build-docker: build ## Build docker image
+	docker build -t $(DOCKER_IMAGE) -t $(DOCKER_MAJOR_IMAGE) -t $(DOCKER_LATEST_IMAGE) .
+
+publish-docker: ## Publish docker image
+	docker push $(DOCKER_IMAGE)
+	docker push $(DOCKER_MAJOR_IMAGE)
+	docker push $(DOCKER_LATEST_IMAGE)
+
+docker: build-docker publish-docker ## Release new image
+
+## APP DEPLOY
+
+.PHONY: setupfirst setup
+
+setupfirst: build ## Run app first setup
+	$(BIN_PATH) setup --config dc.anvil_out/governor/client.yaml --first
+
+setup: build ## Run app setup
+	./setup.sh "$(BIN_PATH)"
