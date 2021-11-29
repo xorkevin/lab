@@ -40,6 +40,9 @@ devup: ## Deploy docker-compose resources
 devdown: ## Destroy docker-compose resources
 	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml down
 
+restart: ## Restart main app
+	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml restart govlab
+
 ## APP BUILD
 
 BIN_NAME=governor
