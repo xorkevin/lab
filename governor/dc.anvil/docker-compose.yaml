@@ -61,6 +61,22 @@ services:
       - minio
       - nats
 
+  govstatic:
+    image: {{ .Vars.images.fsserve.name }}:{{ .Vars.images.govlab.version }}
+    volumes:
+      - ./fsserveconfig:/home/fsserve/config
+      - ../../dc.run/static:/home/fsserve/base
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik_web'
+      - 'traefik.http.services.govstatic.loadbalancer.server.port=8080'
+      - 'traefik.http.routers.govstatic.entrypoints=web'
+      - 'traefik.http.routers.govstatic.rule=Host(`{{ .Vars.service.govlab.host }}`)'
+      - 'traefik.http.routers.govstatic.service=govstatic@docker'
+    networks:
+      - default
+      - traefik_web
+
   mailhog:
     image: {{ .Vars.images.mailhog.name }}:{{ .Vars.images.mailhog.version }}
 

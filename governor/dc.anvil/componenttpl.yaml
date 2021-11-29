@@ -17,3 +17,6 @@ templates:
   client:
     path: client.yaml
     output: {{ $outdir }}/client.yaml
+  fsserve:
+    path: .fsserve.yaml
+    output: {{ $outdir }}/fsserveconfig/.fsserve.yaml

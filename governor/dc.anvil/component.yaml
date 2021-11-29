@@ -6,6 +6,9 @@ vars:
     govlab:
       name: xorkevin/govlab
       version: latest
+    fsserve:
+      name: xorkevin/fsserve
+      version: '0.1'
     postgres:
       name: postgres
       version: 14-alpine
