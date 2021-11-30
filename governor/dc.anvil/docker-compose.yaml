@@ -13,11 +13,13 @@ services:
       - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
 
   redis:
     image: {{ .Vars.images.redis.name }}:{{ .Vars.images.redis.version }}
     entrypoint: ['redis-server']
     command: ['--requirepass', "${REDIS_PASSWORD}"]
+    restart: unless-stopped
 
   minio:
     image: {{ .Vars.images.minio.name }}:{{ .Vars.images.minio.version }}
@@ -28,6 +30,7 @@ services:
       MINIO_SECRET_KEY: "${MINIO_SECRET}"
     volumes:
       - miniodata:/var/lib/minio
+    restart: unless-stopped
 
   nats:
     image: {{ .Vars.images.nats.name }}:{{ .Vars.images.nats.version }}
@@ -38,6 +41,7 @@ services:
     volumes:
       - natsdata:/var/lib/nats
       - ./natsetc:/etc/nats:ro
+    restart: unless-stopped
 
   govlab:
     image: {{ .Vars.images.govlab.name }}:{{ .Vars.images.govlab.version }}
@@ -60,6 +64,7 @@ services:
       - redis
       - minio
       - nats
+    restart: unless-stopped
 
   govstatic:
     image: {{ .Vars.images.fsserve.name }}:{{ .Vars.images.govlab.version }}
@@ -76,9 +81,11 @@ services:
     networks:
       - default
       - traefik_web
+    restart: unless-stopped
 
   mailhog:
     image: {{ .Vars.images.mailhog.name }}:{{ .Vars.images.mailhog.version }}
+    restart: unless-stopped
 
 volumes:
   pgdata: {}

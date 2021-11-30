@@ -13,6 +13,7 @@ services:
       - 5434:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
   headscale:
     image: {{ .Vars.images.headscale.name }}:{{ .Vars.images.headscale.version }}
     entrypoint: ['headscale']
@@ -30,6 +31,7 @@ services:
     depends_on:
       - postgres
       - derper
+    restart: unless-stopped
     extra_hosts:
       - governor.dev.localhost:host-gateway
   derper:
@@ -59,6 +61,7 @@ services:
 {{- if .Vars.server.headscale.derp.tls }}
       - ../../dc.run/derper/cert:/etc/derper/certs:ro
 {{- end }}
+    restart: unless-stopped
 
 volumes:
   pgdata: {}

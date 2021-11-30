@@ -24,6 +24,7 @@ services:
     networks:
       - default
       - web
+    restart: unless-stopped
 
 networks:
   web: {}
