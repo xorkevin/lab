@@ -43,7 +43,7 @@ services:
     image: {{ .Vars.images.govlab.name }}:{{ .Vars.images.govlab.version }}
     volumes:
       - ./govconfig:/home/governor/config:ro
-      - ./govetc:/etc/governor:ro
+      - ../../dc.run/govetc:/etc/governor:ro
       - ./templates:/home/governor/templates:ro
     labels:
       - 'traefik.enable=true'

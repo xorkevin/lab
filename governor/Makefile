@@ -17,31 +17,33 @@ DC_ANVIL_SRC=dc.anvil
 DC_ANVIL_MAIN=$(DC_ANVIL_SRC)/component.yaml
 DC_ANVIL_OUT=dc.anvil_out
 DC_PROJECT=govlab
+DC_ARGS=-p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml --env-file dc.run/docker-compose.env
 
-.PHONY: init config devgen dryrun devup devdown
+.PHONY: init config devgen dryrun devup devdown stopapp
 
 init: ## Init secrets
 	./init.sh
+	./genenv.sh
 
 config: ## Set manual secrets
 	./config.sh
+	./genenv.sh
 
 devgen: ## Generate docker-compose resources
 	if [ -d $(DC_ANVIL_OUT) ]; then rm -r $(DC_ANVIL_OUT); fi
 	anvil component -i $(DC_ANVIL_SRC) -o $(DC_ANVIL_OUT) -c $(DC_ANVIL_MAIN)
-	./genenv.sh
 
 dryrun: ## View docker-compose config
-	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml config
+	docker-compose $(DC_ARGS) config
 
 devup: ## Deploy docker-compose resources
-	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml up -d
+	docker-compose $(DC_ARGS) up -d
 
 devdown: ## Destroy docker-compose resources
-	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml down
+	docker-compose $(DC_ARGS) down
 
-restart: ## Restart main app
-	docker-compose -p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/governor/docker-compose.yaml restart govlab
+stopapp: ## Stop main app
+	docker-compose $(DC_ARGS) stop govlab
 
 ## APP BUILD
 

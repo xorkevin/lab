@@ -2,14 +2,16 @@
 
 set -e
 
-envfile=dc.anvil_out/governor/.env
-
+envfile=dc.run/docker-compose.env
+if [ -e "$envfile" ]; then
+  rm "$envfile"
+fi
 mask=$(umask)
 umask 077
 cat dc.run/env/*.env > "$envfile"
 umask "$mask"
 
-etcdir=dc.anvil_out/governor/govetc
+etcdir=dc.run/govetc
 secretsfile="$etcdir/secrets.yaml"
 
 mkdir -p "$etcdir"
@@ -46,5 +48,9 @@ data:
   rsakey:
     secret: |
 EOF
-cat dc.run/env/govrsakey.key | sed 's/^/      /' >> "$secretsfile"
+
+rsakeyfile=dc.run/env/govrsakey.key
+if [ -e "$rsakeyfile" ]; then
+  cat "$rsakeyfile" | sed 's/^/      /' >> "$secretsfile"
+fi
 umask "$mask"
