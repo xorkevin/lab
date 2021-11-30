@@ -146,7 +146,3 @@ if [ ! -e "$govrsakeyfile" ]; then
 else
   log2 "Gov rsa key file already present at $govrsakeyfile"
 fi
-
-staticdir=dc.run/static
-log2 "Mkdir $staticdir"
-mkdir -p "$staticdir"

@@ -51,15 +51,20 @@ BIN_NAME=governor
 MAIN_PATH=main.go
 BIN_DIR=./bin
 BIN_PATH=$(BIN_DIR)/$(BIN_NAME)
+ASSETS_DIR=./dc.run/static
 
-.PHONY: clean build
+.PHONY: clean build assets
 
 clean: ## Remove build artifacts
 	if [ -d $(BIN_DIR) ]; then rm -r $(BIN_DIR); fi
+	if [ -e $(ASSETS_DIR) ]; then rm -r $(ASSETS_DIR); fi
 
 build: ## Build app
 	mkdir -p $(BIN_DIR)
 	CGO_ENABLED=0 go build -trimpath -ldflags "-w -s -X main.GitHash=$$(git rev-parse --verify HEAD)" -o $(BIN_PATH) $(MAIN_PATH)
+
+assets: ## Build static assets
+	npm run build
 
 ## DOCKER
 
