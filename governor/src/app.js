@@ -1,5 +1,5 @@
 import {Fragment, Suspense, useContext} from 'react';
-import {Switch, Route, Redirect, useLocation} from 'react-router-dom';
+import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
 import {useAuthValue, useRefreshAuth, Protected} from '@xorkevin/turbine';
 import {
   MainContent,
@@ -135,42 +135,22 @@ const App = () => {
       )}
 
       <Suspense fallback={ctx.mainFallbackView}>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/x">
-            <LoginContainer />
-          </Route>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/x" element={<LoginContainer />} />
           {ctx.enableOAuth && (
-            <Route path="/oauth">
-              <OAuthContainer />
-            </Route>
+            <Route path="/oauth" element={<OAuthContainer />} />
           )}
-          <Route path="/a">
-            <AccountC />
-          </Route>
-          <Route path="/u">
-            <UserC />
-          </Route>
-          {ctx.enableUserOrgs && (
-            <Route path="/org">
-              <OrgC />
-            </Route>
-          )}
-          <Route path="/admin">
-            <AdminC />
-          </Route>
+          <Route path="/a" element={<AccountC />} />
+          <Route path="/u" element={<UserC />} />
+          {ctx.enableUserOrgs && <Route path="/org" element={<OrgC />} />}
+          <Route path="/admin" element={<AdminC />} />
           {ctx.enableCourier && (
-            <Route path="/courier">
-              <CourierC />
-            </Route>
+            <Route path="/courier" element={<CourierC />} />
           )}
-          <Route path="/setup">
-            <SetupContainer />
-          </Route>
-          <Redirect to="/" />
-        </Switch>
+          <Route path="/setup" element={<SetupContainer />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </Suspense>
 
       {hideNav ? null : <Foot />}
