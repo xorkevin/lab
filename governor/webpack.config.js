@@ -123,13 +123,7 @@ const createConfig = (env, argv) => {
       filename: 'static/[name].[contenthash].js',
     },
 
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000,
-      ignored: /node_modules/,
-    },
-
-    devtool: 'source-map',
+    devtool: false,
   };
 
   return config;
