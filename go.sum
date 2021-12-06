@@ -970,5 +970,7 @@ rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
 xorkevin.dev/governor v0.2.8-0.20211129010910-c1afa8ea81ef h1:RlB44vW4KxqkIi+WhP/7McIA9kOGfkjv4WUlffnULG8=
 xorkevin.dev/governor v0.2.8-0.20211129010910-c1afa8ea81ef/go.mod h1:F86tw1h5bEBcOp1bkme9A7AC+7fdqmSYeb9dsO+mc50=
+xorkevin.dev/governor v0.2.8-0.20211206022213-3743c04ffdd9 h1:Z9gCA0+azhgApsqRU+dz6SOHupUsiKkN9Wel1ZJcWHc=
+xorkevin.dev/governor v0.2.8-0.20211206022213-3743c04ffdd9/go.mod h1:F86tw1h5bEBcOp1bkme9A7AC+7fdqmSYeb9dsO+mc50=
 xorkevin.dev/hunter2 v0.1.7 h1:6pWC8E416cKpM+sdoeE4/pO7RVpxbxMwNe8YO8/wGLM=
 xorkevin.dev/hunter2 v0.1.7/go.mod h1:B6cHSOvftcrjbOPbX8PRaE2X87LPzgnVI2HETKOQVy0=

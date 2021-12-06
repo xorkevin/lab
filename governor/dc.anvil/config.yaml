@@ -83,7 +83,9 @@ user:
   refreshtime: 4380h
   refreshcache: 24h
   confirmtime: 24h
+  passwordreset: true
   passwordresettime: 24h
+  passresetdelay: 6h
   invitationtime: 24h
   usercachetime: 24h
   newloginemail: true
