@@ -117,6 +117,9 @@ oauth:
   ephost: {{ .Vars.service.gov.baseaddr }}
   epprofile: {{ .Vars.service.gov.baseaddr }}/u/{{`{{.Username}}`}}
   eppicture: {{ .Vars.service.gov.baseaddr }}/api/profile/id/{{`{{.Userid}}`}}/image
+org:
+  streamsize: 200M
+  eventsize: 2K
 courier:
   fallbacklink: {{ .Vars.service.gov.baseaddr }}
   linkprefix: {{ .Vars.service.gov.courieraddr }}
