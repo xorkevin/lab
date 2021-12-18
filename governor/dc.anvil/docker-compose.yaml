@@ -24,10 +24,10 @@ services:
   minio:
     image: {{ .Vars.images.minio.name }}:{{ .Vars.images.minio.version }}
     entrypoint: ['minio']
-    command: ['server', '/var/lib/minio/data']
+    command: ['server', '/var/lib/minio/data', '--console-address', ':9001']
     environment:
-      MINIO_ACCESS_KEY: admin
-      MINIO_SECRET_KEY: "${MINIO_SECRET}"
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: "${MINIO_SECRET}"
     volumes:
       - miniodata:/var/lib/minio
     restart: unless-stopped
