@@ -89,6 +89,21 @@ else
   log2 "Gov setup secret env already present at $govsetupsecretenv"
 fi
 
+goveventsapisecretenv="$envdir/goveventsapisecret.env"
+if [ ! -e "$goveventsapisecretenv" ]; then
+  log2 "No gov events api secret env at $goveventsapisecretenv"
+  goveventsapisecret=$(gen_pass 64)
+  mask=$(umask)
+  umask 077
+  cat <<EOF > "$goveventsapisecretenv"
+GOV_EVENTS_API_SECRET='$goveventsapisecret'
+EOF
+  umask "$mask"
+  log2 "Wrote gov events api secret to $goveventsapisecretenv"
+else
+  log2 "Gov events api secret env already present at $goveventsapisecretenv"
+fi
+
 govmailkeyenv="$envdir/govmailkey.env"
 if [ ! -e "$govmailkeyenv" ]; then
   log2 "No gov mailkey env at $govmailkeyenv"

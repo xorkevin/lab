@@ -32,6 +32,8 @@ data:
   objauth:
     username: admin
     password: "${MINIO_SECRET}"
+  eventsapisecret:
+    secret: "${GOV_EVENTS_API_SECRET}"
   eventsauth:
     password: "${NATS_TOKEN}"
   mailauth:
