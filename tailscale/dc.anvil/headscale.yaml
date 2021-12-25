@@ -8,10 +8,12 @@ disable_check_updates: true
 unix_socket: /var/run/headscale.sock
 
 derp:
+  #urls:
+  #  - https://controlplane.tailscale.com/derpmap/default
   paths:
     - /etc/headscale/derp.yaml
   auto_update_enabled: true
-  update_frequency: 1m
+  update_frequency: 24h
 
 db_type: postgres
 db_host: postgres

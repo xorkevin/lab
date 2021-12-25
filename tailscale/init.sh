@@ -11,20 +11,6 @@ gen_pass() {
   head -c "$passlen" < /dev/urandom | base64 | tr -d '\n=' | tr '+/' '-_'
 }
 
-headscalekeydir=dc.run/headscale/key
-headscalekey="$headscalekeydir/private.key"
-if [ ! -e "$headscalekey" ]; then
-  log2 "No headscale wireguard key at $headscalekey"
-  mkdir -p "$headscalekeydir"
-  mask=$(umask)
-  umask 077
-  wg genkey > "$headscalekey"
-  umask "$mask"
-  log2 "Wrote wireguard key to $headscalekey"
-else
-  log2 "Headscale wireguard key already present at $headscalekey"
-fi
-
 envdir=dc.run/env
 pgpassenv="$envdir/pgpass.env"
 if [ ! -e "$pgpassenv" ]; then
