@@ -2,7 +2,7 @@ module xorkevin.dev/lab
 
 go 1.17
 
-require xorkevin.dev/governor v0.2.8-0.20211218034314-d6464e5cc0c2
+require xorkevin.dev/governor v0.2.8-0.20211225010250-5dbd1c65ed35
 
 require (
 	github.com/armon/go-metrics v0.3.9 // indirect
