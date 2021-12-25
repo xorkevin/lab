@@ -19,7 +19,7 @@ DC_ANVIL_OUT=dc.anvil_out
 DC_PROJECT=traefik
 DC_ARGS=-p $(DC_PROJECT) -f $(DC_ANVIL_OUT)/traefik/docker-compose.yaml
 
-.PHONY: init devgen dryrun devup devdown
+.PHONY: init devgen dryrun startnet devup devdown
 
 init: ## Init secrets
 	./init.sh
@@ -30,6 +30,9 @@ devgen: ## Generate docker-compose resources
 
 dryrun: ## View docker-compose config
 	docker-compose $(DC_ARGS) config
+
+startnet: ## Create traefik docker-compose network
+	if [ -z $(docker network ls --filter name=traefik_web -q) ]; then docker network create traefik_web; fi
 
 devup: ## Deploy docker-compose resources
 	docker-compose $(DC_ARGS) up -d

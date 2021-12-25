@@ -23,8 +23,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - default
-      - web
+      - traefik_web
     restart: unless-stopped
 
 networks:
-  web: {}
+  traefik_web:
+    external: true
