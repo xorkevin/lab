@@ -137,16 +137,16 @@ const App = () => {
       <Suspense fallback={ctx.mainFallbackView}>
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/x" element={<LoginContainer />} />
+          <Route path="/x/*" element={<LoginContainer />} />
           {ctx.enableOAuth && (
-            <Route path="/oauth" element={<OAuthContainer />} />
+            <Route path="/oauth/*" element={<OAuthContainer />} />
           )}
-          <Route path="/a" element={<AccountC />} />
-          <Route path="/u" element={<UserC />} />
-          {ctx.enableUserOrgs && <Route path="/org" element={<OrgC />} />}
-          <Route path="/admin" element={<AdminC />} />
+          <Route path="/a/*" element={<AccountC />} />
+          <Route path="/u/*" element={<UserC />} />
+          {ctx.enableUserOrgs && <Route path="/org/*" element={<OrgC />} />}
+          <Route path="/admin/*" element={<AdminC />} />
           {ctx.enableCourier && (
-            <Route path="/courier" element={<CourierC />} />
+            <Route path="/courier/*" element={<CourierC />} />
           )}
           <Route path="/setup" element={<SetupContainer />} />
           <Route path="*" element={<Navigate to="/" replace />} />
