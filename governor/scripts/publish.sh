@@ -10,6 +10,8 @@ if [ ! -e "$envfile" ]; then
   exit 2
 fi
 
+. "$envfile"
+
 subject=$1
 payload=$2
 
