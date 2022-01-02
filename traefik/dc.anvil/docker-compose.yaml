@@ -4,7 +4,7 @@ services:
     entrypoint: ['traefik']
     command:
       - '--entrypoints.web.address=:8080'
-      - '--entrypoints.websecure.address=:8443'
+      - '--entrypoints.web-secure.address=:8443'
       - '--certificatesresolvers.certresolver.acme.httpchallenge=true'
       - '--certificatesresolvers.certresolver.acme.httpchallenge.entrypoint=web'
       - '--certificatesresolvers.certresolver.acme.caserver={{ .Vars.service.traefik.certresolver.caserver }}'

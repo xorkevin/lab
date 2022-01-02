@@ -9,5 +9,6 @@ vars:
   service:
     whoami:
       host: whoami.dev.localhost
+      tls: false
 
 configtpl: componenttpl.yaml
