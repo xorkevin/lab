@@ -34,6 +34,7 @@ services:
     restart: unless-stopped
     extra_hosts:
       - governor.dev.localhost:host-gateway
+{{- if .Vars.server.headscale.derp.enabled }}
   derper:
     image: {{ .Vars.images.derper.name }}:{{ .Vars.images.derper.version }}
     entrypoint: ['/home/derper/derper']
@@ -62,6 +63,7 @@ services:
       - ../../dc.run/derper/cert:/etc/derper/certs:ro
 {{- end }}
     restart: unless-stopped
+{{- end }}
 
 volumes:
   pgdata: {}

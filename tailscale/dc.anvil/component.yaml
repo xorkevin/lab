@@ -18,6 +18,7 @@ vars:
       url: http://localhost:8082
       domain: xorkevin.lan
       derp:
+        enabled: true
         domain: localhost
         port: 8084
         tls: true
