@@ -1,19 +1,25 @@
-server_url: {{ .Vars.server.headscale.url }}
+server_url: {{ .Vars.service.headscale.url }}
 listen_addr: 0.0.0.0:8080
 ip_prefix: 100.64.0.0/10
 private_key_path: /etc/headscalekey/private.key
 ephemeral_node_inactivity_timeout: 30m
-log_level: {{ .Vars.server.headscale.loglevel }}
+log_level: {{ .Vars.service.headscale.loglevel }}
 disable_check_updates: true
 unix_socket: /var/run/headscale.sock
 
 derp:
-  #urls:
-  #  - https://controlplane.tailscale.com/derpmap/default
+{{- if .Vars.service.headscale.derp.enabled }}
   paths:
     - /etc/headscale/derp.yaml
+{{- end }}
+{{- with .Vars.service.headscale.derp.urls }}
+  urls:
+{{- range . }}
+    - {{ . }}
+{{- end }}
+{{- end }}
   auto_update_enabled: true
-  update_frequency: 24h
+  update_frequency: {{ .Vars.service.headscale.derp.updatefreq }}
 
 db_type: postgres
 db_host: postgres
@@ -24,7 +30,7 @@ db_user: postgres
 acl_policy_path: /etc/headscale/aclpolicy.hujson
 
 dns_config:
-{{- with .Vars.server.headscale.dns }}
+{{- with .Vars.service.headscale.dns }}
   nameservers:
 {{- range . }}
     - {{ . }}
@@ -33,11 +39,11 @@ dns_config:
   nameservers: []
 {{- end }}
   magic_dns: true
-  base_domain: {{ .Vars.server.headscale.domain }}
+  base_domain: {{ .Vars.service.headscale.domain }}
 
 oidc:
-  issuer: {{ .Vars.server.headscale.oidc.issuer }}
+  issuer: {{ .Vars.service.headscale.oidc.issuer }}
   domain_map:
-{{- range .Vars.server.headscale.users }}
+{{- range .Vars.service.headscale.users }}
     {{ .email }}: {{ .ns }}
 {{- end }}

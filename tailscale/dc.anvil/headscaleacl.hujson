@@ -1,14 +1,14 @@
 {
   "Groups": {
     "group:admin": [
-{{- range .Vars.server.headscale.users }}
+{{- range .Vars.service.headscale.users }}
 {{- if .admin }}
       "{{ .ns }}",
 {{- end }}
 {{- end }}
     ],
     "group:users": [
-{{- range .Vars.server.headscale.users }}
+{{- range .Vars.service.headscale.users }}
       "{{ .ns }}",
 {{- end }}
     ],

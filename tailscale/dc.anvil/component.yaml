@@ -12,16 +12,20 @@ vars:
     postgres:
       name: postgres
       version: 14-alpine
-  server:
+  service:
     headscale:
-      loglevel: debug
-      url: http://localhost:8082
+      host: headscale.dev.localhost
+      tls: false
+      loglevel: info
+      url: http://headscale.dev.localhost:8080
       domain: xorkevin.lan
       derp:
         enabled: true
-        domain: localhost
+        host: localhost
         port: 8084
-        tls: true
+        urls:
+          - 'https://controlplane.tailscale.com/derpmap/default'
+        updatefreq: 24h
       dns:
         - 172.16.128.1
       oidc:
@@ -30,5 +34,11 @@ vars:
         - email: kevin@xorkevin.com
           ns: kevin
           admin: true
+    derp:
+      enabled: true
+      host: derp.dev.localhost
+      tls: false
+      manualtls: true
+      manualtlsdomain: localhost
 
 configtpl: componenttpl.yaml

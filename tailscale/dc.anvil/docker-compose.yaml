@@ -22,19 +22,33 @@ services:
       HEADSCALE_DB_PASS: "${POSTGRES_PASSWORD}"
       HEADSCALE_OIDC_CLIENT_ID: "${OIDC_CLIENT_ID}"
       HEADSCALE_OIDC_CLIENT_SECRET: "${OIDC_CLIENT_SECRET}"
-    ports:
-      - 8082:8080
     volumes:
       - ./headscaleconfig:/etc/headscale:ro
       - ../../dc.run/headscale/key:/etc/headscalekey
       - ../../dc.run/headscale/run:/var/run
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik_web'
+      - 'traefik.http.services.headscale.loadbalancer.server.port=8080'
+      - 'traefik.http.routers.headscale.entrypoints=web'
+      - 'traefik.http.routers.headscale.rule=Host(`{{ .Vars.service.headscale.host }}`)'
+      - 'traefik.http.routers.headscale.service=headscale@docker'
+{{- if .Vars.service.headscale.tls }}
+      - 'traefik.http.middlewares.headscale-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.headscale-redirect.redirectscheme.permanent=true'
+      - 'traefik.http.routers.headscale.middlewares=headscale-redirect@docker'
+      - 'traefik.http.routers.headscale-secure.entrypoints=web-secure'
+      - 'traefik.http.routers.headscale-secure.tls=true'
+      - 'traefik.http.routers.headscale-secure.tls.certresolver=certresolver'
+      - 'traefik.http.routers.headscale-secure.rule=Host(`{{ .Vars.service.headscale.host }}`)'
+{{- end }}
     depends_on:
       - postgres
       - derper
     restart: unless-stopped
     extra_hosts:
       - governor.dev.localhost:host-gateway
-{{- if .Vars.server.headscale.derp.enabled }}
+{{- if .Vars.service.derp.enabled }}
   derper:
     image: {{ .Vars.images.derper.name }}:{{ .Vars.images.derper.version }}
     entrypoint: ['/home/derper/derper']
@@ -45,22 +59,40 @@ services:
       - ':8080'
       - '--stun'
       - '--verify-clients'
-{{- if .Vars.server.headscale.derp.tls }}
+{{- if .Vars.service.headscale.derp.manualtls }}
       - '--certmode'
       - 'manual'
       - '--certdir'
       - '/etc/derper/certs'
       - '--hostname'
-      - '{{ .Vars.server.headscale.derp.domain }}'
+      - '{{ .Vars.service.derp.manualtlsdomain }}'
 {{- end }}
     ports:
-      - 8084:8080
       - 3478:3478/udp
+{{- if .Vars.service.headscale.derp.manualtls }}
+      - 8084:8080
+{{- end }}
     volumes:
       - ../../dc.run/derper/data:/var/lib/derper/data
       - /var/run/tailscale:/var/run/tailscale:ro
-{{- if .Vars.server.headscale.derp.tls }}
+{{- if .Vars.service.headscale.derp.tls }}
       - ../../dc.run/derper/cert:/etc/derper/certs:ro
+{{- end }}
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik_web'
+      - 'traefik.http.services.derp.loadbalancer.server.port=8080'
+      - 'traefik.http.routers.derp.entrypoints=web'
+      - 'traefik.http.routers.derp.rule=Host(`{{ .Vars.service.derp.host }}`)'
+      - 'traefik.http.routers.derp.service=derp@docker'
+{{- if .Vars.service.derp.tls }}
+      - 'traefik.http.middlewares.derp-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.derp-redirect.redirectscheme.permanent=true'
+      - 'traefik.http.routers.derp.middlewares=derp-redirect@docker'
+      - 'traefik.http.routers.derp-secure.entrypoints=web-secure'
+      - 'traefik.http.routers.derp-secure.tls=true'
+      - 'traefik.http.routers.derp-secure.tls.certresolver=certresolver'
+      - 'traefik.http.routers.derp-secure.rule=Host(`{{ .Vars.service.derp.host }}`)'
 {{- end }}
     restart: unless-stopped
 {{- end }}

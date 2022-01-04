@@ -6,5 +6,5 @@ regions:
     nodes:
       - name: 900a
         regionid: 900
-        hostname: {{ .Vars.server.headscale.derp.domain }}
-        derpport: {{ .Vars.server.headscale.derp.port }}
+        hostname: {{ .Vars.service.headscale.derp.host }}
+        derpport: {{ .Vars.service.headscale.derp.port }}
