@@ -27,6 +27,7 @@ vars:
   service:
     govlab:
       host: governor.dev.localhost
+      tls: false
     gov:
       host: governor.dev.localhost:8080
       courierhost: go.governor.dev.localhost:8080

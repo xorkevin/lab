@@ -56,6 +56,15 @@ services:
       - 'traefik.http.routers.govlab.entrypoints=web'
       - 'traefik.http.routers.govlab.rule=Host(`{{ .Vars.service.govlab.host }}`) && PathPrefix(`/api`, `/.well-known`)'
       - 'traefik.http.routers.govlab.service=govlab@docker'
+{{- if .Vars.service.govlab.tls }}
+      - 'traefik.http.middlewares.govlab-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.govlab-redirect.redirectscheme.permanent=true'
+      - 'traefik.http.routers.govlab.middlewares=govlab-redirect@docker'
+      - 'traefik.http.routers.govlab-secure.entrypoints=web-secure'
+      - 'traefik.http.routers.govlab-secure.tls=true'
+      - 'traefik.http.routers.govlab-secure.tls.certresolver=certresolver'
+      - 'traefik.http.routers.govlab-secure.rule=Host(`{{ .Vars.service.govlab.host }}`) && PathPrefix(`/api`, `/.well-known`)'
+{{- end }}
     networks:
       - default
       - traefik_web
@@ -78,6 +87,15 @@ services:
       - 'traefik.http.routers.govstatic.entrypoints=web'
       - 'traefik.http.routers.govstatic.rule=Host(`{{ .Vars.service.govlab.host }}`)'
       - 'traefik.http.routers.govstatic.service=govstatic@docker'
+{{- if .Vars.service.govlab.tls }}
+      - 'traefik.http.middlewares.govlab-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.govlab-redirect.redirectscheme.permanent=true'
+      - 'traefik.http.routers.govlab.middlewares=govlab-redirect@docker'
+      - 'traefik.http.routers.govlab-secure.entrypoints=web-secure'
+      - 'traefik.http.routers.govlab-secure.tls=true'
+      - 'traefik.http.routers.govlab-secure.tls.certresolver=certresolver'
+      - 'traefik.http.routers.govlab-secure.rule=Host(`{{ .Vars.service.govlab.host }}`)'
+{{- end }}
     networks:
       - default
       - traefik_web
