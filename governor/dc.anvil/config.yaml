@@ -66,6 +66,16 @@ mail:
   streamsize: 200M
   eventsize: 2K
   mailkey: mailkey
+ratelimit:
+  params:
+    base:
+      expiration: 60
+      period: 15
+      limit: 240
+    auth:
+      expiration: 60
+      period: 15
+      limit: 120
 role:
   rolecache: 24h
 apikey:

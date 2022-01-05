@@ -15,3 +15,6 @@ templates:
   login:
     path: login.sh
     output: {{ $outdir }}/login.sh
+  register:
+    path: register.sh
+    output: {{ $outdir }}/register.sh
