@@ -42,9 +42,14 @@ services:
       - 'traefik.http.routers.headscale-secure.tls.certresolver=certresolver'
       - 'traefik.http.routers.headscale-secure.rule=Host(`{{ .Vars.service.headscale.host }}`)'
 {{- end }}
+    networks:
+      - default
+      - traefik_web
     depends_on:
       - postgres
+{{- if .Vars.service.derp.enabled }}
       - derper
+{{- end }}
     restart: unless-stopped
     extra_hosts:
       - governor.dev.localhost:host-gateway
@@ -59,7 +64,7 @@ services:
       - ':8080'
       - '--stun'
       - '--verify-clients'
-{{- if .Vars.service.headscale.derp.manualtls }}
+{{- if .Vars.service.derp.manualtls }}
       - '--certmode'
       - 'manual'
       - '--certdir'
@@ -69,13 +74,13 @@ services:
 {{- end }}
     ports:
       - 3478:3478/udp
-{{- if .Vars.service.headscale.derp.manualtls }}
+{{- if .Vars.service.derp.manualtls }}
       - 8084:8080
 {{- end }}
     volumes:
       - ../../dc.run/derper/data:/var/lib/derper/data
       - /var/run/tailscale:/var/run/tailscale:ro
-{{- if .Vars.service.headscale.derp.tls }}
+{{- if .Vars.service.derp.manualtls }}
       - ../../dc.run/derper/cert:/etc/derper/certs:ro
 {{- end }}
     labels:
@@ -94,8 +99,15 @@ services:
       - 'traefik.http.routers.derp-secure.tls.certresolver=certresolver'
       - 'traefik.http.routers.derp-secure.rule=Host(`{{ .Vars.service.derp.host }}`)'
 {{- end }}
+    networks:
+      - default
+      - traefik_web
     restart: unless-stopped
 {{- end }}
 
 volumes:
   pgdata: {}
+
+networks:
+  traefik_web:
+    external: true

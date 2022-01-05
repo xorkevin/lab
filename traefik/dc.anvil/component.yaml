@@ -13,5 +13,9 @@ vars:
       certresolver:
         caserver: https://acme-staging-v02.api.letsencrypt.org/directory
         email: kevin@xorkevin.com
+      dash:
+        enabled: true
+        host: traefik.dev.localhost
+        tls: false
 
 configtpl: componenttpl.yaml

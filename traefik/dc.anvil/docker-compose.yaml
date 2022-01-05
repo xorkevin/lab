@@ -15,12 +15,32 @@ services:
       - '--providers.docker.network=traefik_web'
       - '--global.checknewversion=false'
       - '--global.sendanonymoususage=false'
+{{- if .Vars.service.traefik.dash.enabled }}
+      - '--api.dashboard=true'
+{{- end }}
     ports:
       - {{ .Vars.service.traefik.port }}:8080
       - {{ .Vars.service.traefik.tlsport }}:8443
     volumes:
       - ../../dc.run/traefik:/var/lib/traefik
       - /var/run/docker.sock:/var/run/docker.sock:ro
+{{- if .Vars.service.traefik.dash.enabled }}
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik_web'
+      - 'traefik.http.routers.traefikdash.entrypoints=web'
+      - 'traefik.http.routers.traefikdash.rule=Host(`{{ .Vars.service.traefik.dash.host }}`)'
+      - 'traefik.http.routers.traefikdash.service=api@internal'
+{{- if .Vars.service.traefik.dash.tls }}
+      - 'traefik.http.middlewares.traefikdash-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.traefikdash-redirect.redirectscheme.permanent=true'
+      - 'traefik.http.routers.traefikdash.middlewares=traefikdash-redirect@docker'
+      - 'traefik.http.routers.traefikdash-secure.entrypoints=web-secure'
+      - 'traefik.http.routers.traefikdash-secure.tls=true'
+      - 'traefik.http.routers.traefikdash-secure.tls.certresolver=certresolver'
+      - 'traefik.http.routers.traefikdash-secure.rule=Host(`{{ .Vars.service.traefik.dash.host }}`)'
+{{- end }}
+{{- end }}
     networks:
       - default
       - traefik_web

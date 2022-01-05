@@ -88,13 +88,13 @@ services:
       - 'traefik.http.routers.govstatic.rule=Host(`{{ .Vars.service.govlab.host }}`)'
       - 'traefik.http.routers.govstatic.service=govstatic@docker'
 {{- if .Vars.service.govlab.tls }}
-      - 'traefik.http.middlewares.govlab-redirect.redirectscheme.scheme=https'
-      - 'traefik.http.middlewares.govlab-redirect.redirectscheme.permanent=true'
-      - 'traefik.http.routers.govlab.middlewares=govlab-redirect@docker'
-      - 'traefik.http.routers.govlab-secure.entrypoints=web-secure'
-      - 'traefik.http.routers.govlab-secure.tls=true'
-      - 'traefik.http.routers.govlab-secure.tls.certresolver=certresolver'
-      - 'traefik.http.routers.govlab-secure.rule=Host(`{{ .Vars.service.govlab.host }}`)'
+      - 'traefik.http.middlewares.govstatic-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.govstatic-redirect.redirectscheme.permanent=true'
+      - 'traefik.http.routers.govstatic.middlewares=govstatic-redirect@docker'
+      - 'traefik.http.routers.govstatic-secure.entrypoints=web-secure'
+      - 'traefik.http.routers.govstatic-secure.tls=true'
+      - 'traefik.http.routers.govstatic-secure.tls.certresolver=certresolver'
+      - 'traefik.http.routers.govstatic-secure.rule=Host(`{{ .Vars.service.govlab.host }}`)'
 {{- end }}
     networks:
       - default
