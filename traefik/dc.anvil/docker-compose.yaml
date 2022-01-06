@@ -22,6 +22,7 @@ services:
     ports:
       - {{ .Vars.service.traefik.port }}:8080
       - {{ .Vars.service.traefik.tlsport }}:8443
+      - {{ .Vars.service.traefik.stunport }}:3478/udp
     volumes:
       - ../../dc.run/traefik:/var/lib/traefik
       - /var/run/docker.sock:/var/run/docker.sock:ro
