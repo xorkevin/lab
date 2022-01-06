@@ -8,7 +8,7 @@ vars:
       version: '1'
   service:
     whoami:
-      host: whoami.dev.localhost
-      tls: false
+      host: whoami.lab.xorkevin.com
+      tls: true
 
 configtpl: componenttpl.yaml

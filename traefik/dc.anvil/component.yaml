@@ -8,14 +8,14 @@ vars:
       version: '2.5'
   service:
     traefik:
-      port: '8080'
-      tlsport: '8443'
+      port: '80'
+      tlsport: '443'
       certresolver:
-        caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+        caserver: https://acme-v02.api.letsencrypt.org/directory
         email: kevin@xorkevin.com
       dash:
-        enabled: true
-        host: traefik.dev.localhost
-        tls: false
+        enabled: false
+        host: traefik.lab.xorkevin.com
+        tls: true
 
 configtpl: componenttpl.yaml
