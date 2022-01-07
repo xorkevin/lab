@@ -19,6 +19,7 @@ services:
       - 'traefik.http.routers.whoami-secure.tls=true'
       - 'traefik.http.routers.whoami-secure.tls.certresolver=certresolver'
       - 'traefik.http.routers.whoami-secure.rule=Host(`{{ .Vars.service.whoami.host }}`)'
+      - 'traefik.http.routers.whoami-secure.middlewares=whoami-ratelimit@docker'
 {{- end }}
     networks:
       - default

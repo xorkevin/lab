@@ -56,14 +56,18 @@ services:
       - 'traefik.http.routers.govlab.entrypoints=web'
       - 'traefik.http.routers.govlab.rule=(Host(`{{ .Vars.service.govlab.host }}`) && PathPrefix(`/api`, `/.well-known`)) || Host(`{{ .Vars.service.govlab.courierhost }}`)'
       - 'traefik.http.routers.govlab.service=govlab@docker'
+      - 'traefik.http.middlewares.govlab-ratelimit.ratelimit.average=60'
+      - 'traefik.http.middlewares.govlab-ratelimit.ratelimit.burst=60'
+      - 'traefik.http.middlewares.govlab-ratelimit.ratelimit.period=15'
+      - 'traefik.http.routers.govlab.middlewares=govlab-ratelimit@docker{{ if .Vars.service.govlab.tls }},govlab-redirect@docker{{ end }}'
 {{- if .Vars.service.govlab.tls }}
       - 'traefik.http.middlewares.govlab-redirect.redirectscheme.scheme=https'
       - 'traefik.http.middlewares.govlab-redirect.redirectscheme.permanent=true'
-      - 'traefik.http.routers.govlab.middlewares=govlab-redirect@docker'
       - 'traefik.http.routers.govlab-secure.entrypoints=web-secure'
       - 'traefik.http.routers.govlab-secure.tls=true'
       - 'traefik.http.routers.govlab-secure.tls.certresolver=certresolver'
       - 'traefik.http.routers.govlab-secure.rule=(Host(`{{ .Vars.service.govlab.host }}`) && PathPrefix(`/api`, `/.well-known`)) || Host(`{{ .Vars.service.govlab.courierhost }}`)'
+      - 'traefik.http.routers.govlab-secure.middlewares=govlab-ratelimit@docker'
 {{- end }}
     networks:
       - default
