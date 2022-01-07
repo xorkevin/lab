@@ -111,9 +111,7 @@ const createConfig = (env, argv) => {
       }),
       new webpack.DefinePlugin({
         APIBASE_URL: JSON.stringify('/api'),
-        COURIERBASE_URL: JSON.stringify(
-          'http://go.governor.dev.localhost:8080',
-        ),
+        COURIERBASE_URL: JSON.stringify('https://go.lab.xorkevin.com'),
       }),
     ],
 

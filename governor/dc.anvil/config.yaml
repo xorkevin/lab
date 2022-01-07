@@ -58,12 +58,12 @@ template:
   dir: templates
 mail:
   auth: mailauth
-  host: mailhog
-  port: 1025
+  host: smtp.sendgrid.net
+  port: 587
   msgiddomain: lab.xorkevin.com
   returnpath: no-reply@mail.lab.xorkevin.com
   fromaddress: no-reply@lab.xorkevin.com
-  fromname: Governor
+  fromname: xorkevin labs
   streamsize: 200M
   eventsize: 2K
   mailkey: mailkey

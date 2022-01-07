@@ -25,4 +25,4 @@ if [ -z "$payload" ]; then
   exit 1
 fi
 
-curl --user "system:${GOV_EVENTS_API_SECRET}" --request POST "http://localhost:8080/api/events/publish?subject=$subject" --data-raw "$payload"
+curl --user "system:${GOV_EVENTS_API_SECRET}" --request POST "https://lab.xorkevin.com/api/events/publish?subject=$subject" --data-raw "$payload"

@@ -26,14 +26,14 @@ vars:
       version: latest
   service:
     govlab:
-      host: governor.dev.localhost
-      tls: false
-      courierhost: go.governor.dev.localhost
+      host: lab.xorkevin.com
+      tls: true
+      courierhost: go.lab.xorkevin.com
     gov:
-      host: governor.dev.localhost:8080
-      courierhost: go.governor.dev.localhost:8080
-      baseaddr: http://governor.dev.localhost:8080
-      courieraddr: http://go.governor.dev.localhost:8080
+      host: lab.xorkevin.com
+      courierhost: go.lab.xorkevin.com
+      baseaddr: https://lab.xorkevin.com
+      courieraddr: https://go.lab.xorkevin.com
   templates:
     - emailchange.html
     - emailchangenotify.html
