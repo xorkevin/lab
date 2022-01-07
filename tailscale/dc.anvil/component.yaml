@@ -4,7 +4,7 @@ vars:
   outputdir: tailscale
   images:
     headscale:
-      name: headscale/headscale
+      name: ghcr.io/xorkevin/headscale
       version: '0.12'
     derper:
       name: xorkevin/derper
