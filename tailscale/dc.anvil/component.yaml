@@ -14,31 +14,32 @@ vars:
       version: 14-alpine
   service:
     headscale:
-      host: headscale.dev.localhost
-      tls: false
+      host: headscale.lab.xorkevin.com
+      tls: true
       loglevel: info
-      url: http://headscale.dev.localhost:8080
+      url: https://headscale.lab.xorkevin.com
       domain: xorkevin.lan
       derp:
         enabled: true
-        host: localhost
-        port: 8084
-        urls:
-          - 'https://controlplane.tailscale.com/derpmap/default'
+        host: beacon.lab.xorkevin.com
+        port: 443
         updatefreq: 24h
       dns:
-        - 172.16.128.1
+        - 8.8.8.8
+        - 8.8.4.4
+        - 1.0.0.1
+        - 1.1.1.1
       oidc:
-        issuer: http://governor.dev.localhost:8080
+        issuer: https://lab.xorkevin.com
       users:
         - email: kevin@xorkevin.com
           ns: kevin
           admin: true
     derp:
       enabled: true
-      host: derp.dev.localhost
-      tls: false
-      manualtls: true
+      host: beacon.lab.xorkevin.com
+      tls: true
+      manualtls: false
       manualtlsdomain: localhost
 
 configtpl: componenttpl.yaml
