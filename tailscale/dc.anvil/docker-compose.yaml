@@ -33,14 +33,18 @@ services:
       - 'traefik.http.routers.headscale.entrypoints=web'
       - 'traefik.http.routers.headscale.rule=Host(`{{ .Vars.service.headscale.host }}`)'
       - 'traefik.http.routers.headscale.service=headscale@docker'
+      - 'traefik.http.middlewares.headscale-ratelimit.ratelimit.average=60'
+      - 'traefik.http.middlewares.headscale-ratelimit.ratelimit.burst=60'
+      - 'traefik.http.middlewares.headscale-ratelimit.ratelimit.period=15'
+      - 'traefik.http.routers.headscale.middlewares=headscale-ratelimit@docker{{ if .Vars.service.headscale.tls }},headscale-redirect@docker{{ end }}'
 {{- if .Vars.service.headscale.tls }}
       - 'traefik.http.middlewares.headscale-redirect.redirectscheme.scheme=https'
       - 'traefik.http.middlewares.headscale-redirect.redirectscheme.permanent=true'
-      - 'traefik.http.routers.headscale.middlewares=headscale-redirect@docker'
       - 'traefik.http.routers.headscale-secure.entrypoints=web-secure'
       - 'traefik.http.routers.headscale-secure.tls=true'
       - 'traefik.http.routers.headscale-secure.tls.certresolver=certresolver'
       - 'traefik.http.routers.headscale-secure.rule=Host(`{{ .Vars.service.headscale.host }}`)'
+      - 'traefik.http.routers.headscale-secure.middlewares=headscale-ratelimit@docker'
 {{- end }}
     networks:
       - default
@@ -92,14 +96,18 @@ services:
       - 'traefik.http.routers.derp.entrypoints=web'
       - 'traefik.http.routers.derp.rule=Host(`{{ .Vars.service.derp.host }}`)'
       - 'traefik.http.routers.derp.service=derp@docker'
+      - 'traefik.http.middlewares.derp-ratelimit.ratelimit.average=60'
+      - 'traefik.http.middlewares.derp-ratelimit.ratelimit.burst=60'
+      - 'traefik.http.middlewares.derp-ratelimit.ratelimit.period=15'
+      - 'traefik.http.routers.derp.middlewares=derp-ratelimit@docker{{ if .Vars.service.derp.tls }},derp-redirect@docker{{ end }}'
 {{- if .Vars.service.derp.tls }}
       - 'traefik.http.middlewares.derp-redirect.redirectscheme.scheme=https'
       - 'traefik.http.middlewares.derp-redirect.redirectscheme.permanent=true'
-      - 'traefik.http.routers.derp.middlewares=derp-redirect@docker'
       - 'traefik.http.routers.derp-secure.entrypoints=web-secure'
       - 'traefik.http.routers.derp-secure.tls=true'
       - 'traefik.http.routers.derp-secure.tls.certresolver=certresolver'
       - 'traefik.http.routers.derp-secure.rule=Host(`{{ .Vars.service.derp.host }}`)'
+      - 'traefik.http.routers.derp-secure.middlewares=derp-ratelimit@docker'
 {{- end }}
     networks:
       - default
