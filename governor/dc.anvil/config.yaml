@@ -60,8 +60,9 @@ mail:
   auth: mailauth
   host: mailhog
   port: 1025
-  msgiddomain: xorkevin.com
-  fromaddress: no-reply@xorkevin.com
+  msgiddomain: lab.xorkevin.com
+  returnpath: no-reply@mail.lab.xorkevin.com
+  fromaddress: no-reply@lab.xorkevin.com
   fromname: Governor
   streamsize: 200M
   eventsize: 2K
