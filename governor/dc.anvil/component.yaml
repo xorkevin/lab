@@ -4,7 +4,7 @@ vars:
   outputdir: governor
   images:
     govlab:
-      name: xorkevin/govlab
+      name: ghcr.io/xorkevin/govlab
       version: latest
     fsserve:
       name: xorkevin/fsserve

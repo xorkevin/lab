@@ -68,7 +68,7 @@ assets: ## Build static assets
 
 ## DOCKER
 
-DOCKER_NAME=xorkevin/govlab
+DOCKER_NAME=ghcr.io/xorkevin/govlab
 
 DOCKER_MAJOR_VERSION=0.2
 DOCKER_VERSION=0.2.7-0
