@@ -1,0 +1,5 @@
+{{ $outdir := .Vars.outputdir -}}
+templates:
+  lighthouse:
+    path: lighthouse.yaml
+    output: {{ $outdir }}/lighthouse/config.yaml

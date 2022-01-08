@@ -1,0 +1,15 @@
+version: xorkevin.dev/anvil/v1alpha1
+
+vars:
+  outputdir: nebula
+  images:
+  service:
+    nebula:
+      lighthouse:
+        host: beacon.lab.xorkevin.com
+        port: 4242
+        ip: '172.16.127.1'
+        dnsport: 53
+      cidr: '172.16.127.0/24'
+
+configtpl: componenttpl.yaml
