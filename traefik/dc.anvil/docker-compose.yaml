@@ -5,7 +5,6 @@ services:
     command:
       - '--entrypoints.web.address=:8080'
       - '--entrypoints.web-secure.address=:8443'
-      - '--entrypoints.stun.address=:3478/udp'
       - '--certificatesresolvers.certresolver.acme.httpchallenge=true'
       - '--certificatesresolvers.certresolver.acme.httpchallenge.entrypoint=web'
       - '--certificatesresolvers.certresolver.acme.caserver={{ .Vars.service.traefik.certresolver.caserver }}'
@@ -22,7 +21,6 @@ services:
     ports:
       - {{ .Vars.service.traefik.port }}:8080
       - {{ .Vars.service.traefik.tlsport }}:8443
-      - {{ .Vars.service.traefik.stunport }}:3478/udp
     volumes:
       - ../../dc.run/traefik:/var/lib/traefik
       - /var/run/docker.sock:/var/run/docker.sock:ro

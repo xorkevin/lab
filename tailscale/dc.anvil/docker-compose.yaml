@@ -76,8 +76,9 @@ services:
       - '--hostname'
       - '{{ .Vars.service.derp.manualtlsdomain }}'
 {{- end }}
-{{- if .Vars.service.derp.manualtls }}
     ports:
+      - 3478:3478/udp
+{{- if .Vars.service.derp.manualtls }}
       - 8084:8080
 {{- end }}
     volumes:
@@ -89,9 +90,6 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.docker.network=traefik_web'
-      - 'traefik.udp.services.derpstun.loadbalancer.server.port=3478'
-      - 'traefik.udp.routers.derpstun.entrypoints=stun'
-      - 'traefik.udp.routers.derpstun.service=derpstun@docker'
       - 'traefik.http.services.derp.loadbalancer.server.port=8080'
       - 'traefik.http.routers.derp.entrypoints=web'
       - 'traefik.http.routers.derp.rule=Host(`{{ .Vars.service.derp.host }}`)'

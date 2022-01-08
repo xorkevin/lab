@@ -10,7 +10,6 @@ vars:
     traefik:
       port: '8080'
       tlsport: '8443'
-      stunport: '3478'
       certresolver:
         caserver: https://acme-staging-v02.api.letsencrypt.org/directory
         email: kevin@xorkevin.com
