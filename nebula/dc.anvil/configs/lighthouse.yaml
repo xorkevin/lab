@@ -1,0 +1,50 @@
+pki:
+  ca: /etc/nebula/ca.crt
+  cert: /etc/nebula/host.crt
+  key: /etc/nebula/host.key
+
+static_host_map:
+  '{{ .Vars.service.nebula.lighthouse.ip }}': ['{{ .Vars.service.nebula.lighthouse.host }}:{{ .Vars.service.nebula.lighthouse.port }}']
+
+lighthouse:
+  am_lighthouse: true
+  serve_dns: true
+  dns:
+    host: '{{ .Vars.service.nebula.lighthouse.ip }}'
+    port: {{ .Vars.service.nebula.lighthouse.dnsport }}
+
+listen:
+  host: '0.0.0.0'
+  port: {{ .Vars.service.nebula.lighthouse.port }}
+
+punchy:
+  punch: true
+  respond: true
+  delay: 1s
+
+cipher: aes
+
+tun:
+  disabled: false
+  dev: nebula1
+
+logging:
+  level: info
+  # json or text formats currently available. Default is text
+  format: text
+
+firewall:
+  outbound:
+    - port: any
+      proto: any
+      host: any
+  inbound:
+    - port: any
+      proto: icmp
+      host: any
+    - port: {{ .Vars.service.nebula.lighthouse.port }}
+      proto: udp
+      host: any
+    - port: {{ .Vars.service.nebula.lighthouse.dnsport }}
+      proto: udp
+      host: any

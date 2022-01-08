@@ -1,17 +1,17 @@
 pki:
-  ca: /etc/nebula/ca/ca.crt
-  cert: /etc/nebula/host/host.crt
-  key: /etc/nebula/host/host.key
+  ca: /etc/nebula/ca.crt
+  cert: /etc/nebula/host.crt
+  key: /etc/nebula/host.key
 
 static_host_map:
   '{{ .Vars.service.nebula.lighthouse.ip }}': ['{{ .Vars.service.nebula.lighthouse.host }}:{{ .Vars.service.nebula.lighthouse.port }}']
 
 lighthouse:
-  am_lighthouse: true
-  serve_dns: true
-  dns:
-    host: '{{ .Vars.service.nebula.lighthouse.ip }}'
-    port: {{ .Vars.service.nebula.lighthouse.dnsport }}
+  am_lighthouse: false
+  serve_dns: false
+  interval: {{ .Vars.service.nebula.reportinterval }}
+  hosts:
+    - '{{ .Vars.service.nebula.lighthouse.ip }}'
 
 listen:
   host: '0.0.0.0'
@@ -23,8 +23,6 @@ punchy:
   delay: 1s
 
 cipher: aes
-
-preferred_ranges: ['{{ .Vars.service.nebula.cidr }}']
 
 tun:
   disabled: false
@@ -43,10 +41,4 @@ firewall:
   inbound:
     - port: any
       proto: icmp
-      host: any
-    - port: {{ .Vars.service.nebula.lighthouse.port }}
-      proto: udp
-      host: any
-    - port: {{ .Vars.service.nebula.lighthouse.dnsport }}
-      proto: udp
       host: any

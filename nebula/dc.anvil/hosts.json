@@ -1,0 +1,22 @@
+{
+  "hosts": [
+    {
+      "name": "lighthouse1",
+      "ip": "172.16.127.1/24",
+      "kind": "lighthouse",
+      "groups": "lighthouses"
+    },
+    {
+      "name": "hades1",
+      "ip": "172.16.127.20/24",
+      "kind": "lab",
+      "groups": "lab"
+    },
+    {
+      "name": "atlas2",
+      "ip": "172.16.127.4/24",
+      "kind": "user",
+      "groups": "users,admin"
+    }
+  ]
+}

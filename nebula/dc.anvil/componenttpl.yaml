@@ -1,5 +1,10 @@
 {{ $outdir := .Vars.outputdir -}}
 templates:
-  lighthouse:
-    path: lighthouse.yaml
-    output: {{ $outdir }}/lighthouse/config.yaml
+  hosts:
+    path: hosts.json
+    output: {{ $outdir }}/hosts.json
+{{- range .Vars.service.nebula.configs }}
+  config_{{ . }}:
+    path: configs/{{ . }}.yaml
+    output: {{ $outdir }}/configs/{{ . }}.yaml
+{{- end }}

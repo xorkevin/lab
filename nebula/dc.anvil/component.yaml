@@ -10,6 +10,10 @@ vars:
         port: 4242
         ip: '172.16.127.1'
         dnsport: 53
-      cidr: '172.16.127.0/24'
+      reportinterval: 60
+      configs:
+        - lighthouse
+        - lab
+        - user
 
 configtpl: componenttpl.yaml
