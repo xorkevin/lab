@@ -56,8 +56,8 @@ services:
       - 'traefik.http.routers.govlab.entrypoints=web'
       - 'traefik.http.routers.govlab.rule=(Host(`{{ .Vars.service.govlab.host }}`) && PathPrefix(`/api`, `/.well-known`)) || Host(`{{ .Vars.service.govlab.courierhost }}`)'
       - 'traefik.http.routers.govlab.service=govlab@docker'
-      - 'traefik.http.middlewares.govlab-ratelimit.ratelimit.average=60'
-      - 'traefik.http.middlewares.govlab-ratelimit.ratelimit.burst=60'
+      - 'traefik.http.middlewares.govlab-ratelimit.ratelimit.average=240'
+      - 'traefik.http.middlewares.govlab-ratelimit.ratelimit.burst=240'
       - 'traefik.http.middlewares.govlab-ratelimit.ratelimit.period=15'
       - 'traefik.http.routers.govlab.middlewares=govlab-ratelimit@docker{{ if .Vars.service.govlab.tls }},govlab-redirect@docker{{ end }}'
 {{- if .Vars.service.govlab.tls }}
@@ -91,8 +91,8 @@ services:
       - 'traefik.http.routers.govstatic.entrypoints=web'
       - 'traefik.http.routers.govstatic.rule=Host(`{{ .Vars.service.govlab.host }}`)'
       - 'traefik.http.routers.govstatic.service=govstatic@docker'
-      - 'traefik.http.middlewares.govstatic-ratelimit.ratelimit.average=60'
-      - 'traefik.http.middlewares.govstatic-ratelimit.ratelimit.burst=60'
+      - 'traefik.http.middlewares.govstatic-ratelimit.ratelimit.average=240'
+      - 'traefik.http.middlewares.govstatic-ratelimit.ratelimit.burst=240'
       - 'traefik.http.middlewares.govstatic-ratelimit.ratelimit.period=15'
       - 'traefik.http.routers.govstatic.middlewares=govstatic-ratelimit@docker{{ if .Vars.service.govlab.tls }},govstatic-redirect@docker{{ end }}'
 {{- if .Vars.service.govlab.tls }}

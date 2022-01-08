@@ -94,8 +94,8 @@ services:
       - 'traefik.http.routers.derp.entrypoints=web'
       - 'traefik.http.routers.derp.rule=Host(`{{ .Vars.service.derp.host }}`)'
       - 'traefik.http.routers.derp.service=derp@docker'
-      - 'traefik.http.middlewares.derp-ratelimit.ratelimit.average=60'
-      - 'traefik.http.middlewares.derp-ratelimit.ratelimit.burst=60'
+      - 'traefik.http.middlewares.derp-ratelimit.ratelimit.average=240'
+      - 'traefik.http.middlewares.derp-ratelimit.ratelimit.burst=240'
       - 'traefik.http.middlewares.derp-ratelimit.ratelimit.period=15'
       - 'traefik.http.routers.derp.middlewares=derp-ratelimit@docker{{ if .Vars.service.derp.tls }},derp-redirect@docker{{ end }}'
 {{- if .Vars.service.derp.tls }}
