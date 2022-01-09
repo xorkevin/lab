@@ -36,5 +36,5 @@ for i in $(cat "$hostsfile" | jq '.hosts | keys[]'); do
     log2 "Host cert for $name already present at $hostdir"
   fi
   cp "$cacertdir/ca.crt" "$hostdir/ca.crt"
-  cp "$configsdir/$kind.yaml" "$hostdir/config.yaml"
+  cp "$configsdir/$kind.yaml" "$hostdir/config.yml"
 done
