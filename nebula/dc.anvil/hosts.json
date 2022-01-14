@@ -17,6 +17,12 @@
       "ip": "172.16.127.4/24",
       "kind": "user",
       "groups": "users,admin"
+    },
+    {
+      "name": "ares3",
+      "ip": "172.16.127.6/24",
+      "kind": "user",
+      "groups": "users,admin"
     }
   ]
 }
