@@ -8,7 +8,7 @@ vars:
       version: '0.1'
   service:
     nukedocs:
-      host: nuke.dev.localhost
-      tls: false
+      host: nuke.xorkevin.dev
+      tls: true
 
 configtpl: componenttpl.yaml
