@@ -111,7 +111,7 @@ const createConfig = (env, argv) => {
       }),
       new webpack.DefinePlugin({
         APIBASE_URL: JSON.stringify('/api'),
-        COURIERBASE_URL: JSON.stringify('https://go.lab.xorkevin.com'),
+        COURIERBASE_URL: JSON.stringify('https://go.xorkevin.com'),
       }),
     ],
 

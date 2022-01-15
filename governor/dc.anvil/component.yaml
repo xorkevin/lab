@@ -28,12 +28,12 @@ vars:
     govlab:
       host: lab.xorkevin.com
       tls: true
-      courierhost: go.lab.xorkevin.com
+      courierhost: go.xorkevin.com
     gov:
       host: lab.xorkevin.com
-      courierhost: go.lab.xorkevin.com
+      courierhost: go.xorkevin.com
       baseaddr: https://lab.xorkevin.com
-      courieraddr: https://go.lab.xorkevin.com
+      courieraddr: https://go.xorkevin.com
   templates:
     - emailchange.html
     - emailchangenotify.html
