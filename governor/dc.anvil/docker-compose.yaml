@@ -80,7 +80,7 @@ services:
     restart: unless-stopped
 
   govstatic:
-    image: {{ .Vars.images.fsserve.name }}:{{ .Vars.images.govlab.version }}
+    image: {{ .Vars.images.fsserve.name }}:{{ .Vars.images.fsserve.version }}
     volumes:
       - ./fsserveconfig:/home/fsserve/config
       - ../../dc.run/static:/home/fsserve/base
@@ -91,14 +91,18 @@ services:
       - 'traefik.http.routers.govstatic.entrypoints=web'
       - 'traefik.http.routers.govstatic.rule=Host(`{{ .Vars.service.govlab.host }}`)'
       - 'traefik.http.routers.govstatic.service=govstatic@docker'
+      - 'traefik.http.middlewares.govstatic-ratelimit.ratelimit.average=60'
+      - 'traefik.http.middlewares.govstatic-ratelimit.ratelimit.burst=60'
+      - 'traefik.http.middlewares.govstatic-ratelimit.ratelimit.period=15'
+      - 'traefik.http.routers.govstatic.middlewares=govstatic-ratelimit@docker{{ if .Vars.service.govlab.tls }},govstatic-redirect@docker{{ end }}'
 {{- if .Vars.service.govlab.tls }}
       - 'traefik.http.middlewares.govstatic-redirect.redirectscheme.scheme=https'
       - 'traefik.http.middlewares.govstatic-redirect.redirectscheme.permanent=true'
-      - 'traefik.http.routers.govstatic.middlewares=govstatic-redirect@docker'
       - 'traefik.http.routers.govstatic-secure.entrypoints=web-secure'
       - 'traefik.http.routers.govstatic-secure.tls=true'
       - 'traefik.http.routers.govstatic-secure.tls.certresolver=certresolver'
       - 'traefik.http.routers.govstatic-secure.rule=Host(`{{ .Vars.service.govlab.host }}`)'
+      - 'traefik.http.routers.-secure.middlewares=govstatic-ratelimit@docker'
 {{- end }}
     networks:
       - default

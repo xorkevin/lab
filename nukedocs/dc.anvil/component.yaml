@@ -1,0 +1,14 @@
+version: xorkevin.dev/anvil/v1alpha1
+
+vars:
+  outputdir: nukedocs
+  images:
+    fsserve:
+      name: xorkevin/fsserve
+      version: '0.1'
+  service:
+    nukedocs:
+      host: nuke.dev.localhost
+      tls: false
+
+configtpl: componenttpl.yaml

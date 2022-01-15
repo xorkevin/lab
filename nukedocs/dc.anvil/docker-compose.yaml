@@ -1,0 +1,34 @@
+services:
+  nukedocs:
+    image: {{ .Vars.images.fsserve.name }}:{{ .Vars.images.fsserve.version }}
+    volumes:
+      - ./fsserveconfig:/home/fsserve/config
+      - ../../dc.run/static:/home/fsserve/base
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik_web'
+      - 'traefik.http.services.nukedocs.loadbalancer.server.port=8080'
+      - 'traefik.http.routers.nukedocs.entrypoints=web'
+      - 'traefik.http.routers.nukedocs.rule=Host(`{{ .Vars.service.nukedocs.host }}`)'
+      - 'traefik.http.routers.nukedocs.service=nukedocs@docker'
+      - 'traefik.http.middlewares.nukedocs-ratelimit.ratelimit.average=60'
+      - 'traefik.http.middlewares.nukedocs-ratelimit.ratelimit.burst=60'
+      - 'traefik.http.middlewares.nukedocs-ratelimit.ratelimit.period=15'
+      - 'traefik.http.routers.nukedocs.middlewares=nukedocs-ratelimit@docker{{ if .Vars.service.nukedocs.tls }},nukedocs-redirect@docker{{ end }}'
+{{- if .Vars.service.nukedocs.tls }}
+      - 'traefik.http.middlewares.nukedocs-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.nukedocs-redirect.redirectscheme.permanent=true'
+      - 'traefik.http.routers.nukedocs-secure.entrypoints=web-secure'
+      - 'traefik.http.routers.nukedocs-secure.tls=true'
+      - 'traefik.http.routers.nukedocs-secure.tls.certresolver=certresolver'
+      - 'traefik.http.routers.nukedocs-secure.rule=Host(`{{ .Vars.service.nukedocs.host }}`)'
+      - 'traefik.http.routers.-secure.middlewares=nukedocs-ratelimit@docker'
+{{- end }}
+    networks:
+      - default
+      - traefik_web
+    restart: unless-stopped
+
+networks:
+  traefik_web:
+    external: true

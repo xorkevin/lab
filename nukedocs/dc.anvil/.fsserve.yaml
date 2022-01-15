@@ -1,0 +1,55 @@
+routes:
+  - prefix: /static/icon/
+    dir: true
+    path: static/icon
+    cachecontrol:
+      - public
+      - max-age=31536000
+      - no-cache
+    etag: true
+  - prefix: /static/
+    dir: true
+    path: static
+    cachecontrol:
+      - public
+      - max-age=31536000
+      - immutable
+    etag: true
+    compressed:
+      - code: br
+        test: '\.(html|js|css|json)(\.map)?$'
+        suffix: .br
+      - code: gzip
+        test: '\.(html|js|css|json)(\.map)?$'
+        suffix: .gz
+  - prefix: /favicon.ico
+    path: favicon.ico
+    cachecontrol:
+      - public
+      - max-age=31536000
+      - no-cache
+    etag: true
+  - prefix: /manifest.json
+    path: manifest.json
+    cachecontrol:
+      - public
+      - max-age=31536000
+      - no-cache
+    etag: true
+    compressed:
+      - code: br
+        suffix: .br
+      - code: gzip
+        suffix: .gz
+  - prefix: /
+    path: index.html
+    cachecontrol:
+      - public
+      - max-age=31536000
+      - no-cache
+    etag: true
+    compressed:
+      - code: br
+        suffix: .br
+      - code: gzip
+        suffix: .gz
