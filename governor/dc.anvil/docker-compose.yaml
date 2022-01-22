@@ -109,10 +109,6 @@ services:
       - traefik_web
     restart: unless-stopped
 
-  mailhog:
-    image: {{ .Vars.images.mailhog.name }}:{{ .Vars.images.mailhog.version }}
-    restart: unless-stopped
-
 volumes:
   pgdata: {}
   miniodata: {}
